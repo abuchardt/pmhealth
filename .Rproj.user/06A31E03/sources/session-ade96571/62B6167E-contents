@@ -270,7 +270,7 @@ The WrightMap package provides functions to easily create these Wright Maps from
 #install.packages("WrightMap")
 library(WrightMap)
 
-wrightMap(fit$etapar, pp$theta.table)
+wrightMap(fit$etapar, ppar$theta.table)
 
 ```
 
