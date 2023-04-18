@@ -1,0 +1,2678 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="presentation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="presentation_files/libs/quarto-html/tabby.min.js"></script>
+<script src="presentation_files/libs/quarto-html/popper.min.js"></script>
+<script src="presentation_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="presentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="presentation_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="presentation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="presentation_files/libs/quarto-contrib/reveal-auto-agenda-0.0.1/reveal-auto-agenda.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.2.335">
+
+  <meta name="author" content="Ann-Sophie Buchardt">
+  <title>Rasch in R</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="presentation_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="presentation_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="presentation_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="presentation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="presentation_files/libs/revealjs/plugin/reveal-pointer/pointer.css" rel="stylesheet">
+  <link href="presentation_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  
+  <script src="presentation_files/libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+  <link href="presentation_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+  <script src="presentation_files/libs/datatables-binding-0.26/datatables.js"></script>
+  <script src="presentation_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <link href="presentation_files/libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="presentation_files/libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
+  <script src="presentation_files/libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+  <link href="presentation_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+  <script src="presentation_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Rasch in R</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Ann-Sophie Buchardt 
+</div>
+</div>
+</div>
+
+</section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>Introduction</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="the-rasch-model" class="slide level2">
+<h2>The Rasch model</h2>
+<p>The Rasch model for polytomous items<sup>1</sup> <span class="citation" data-cites="Andersen1977">(<a href="#/cicc-1" role="doc-biblioref" onclick="">Erling B. Andersen 1977</a>)</span>:</p>
+<p>For person <span class="math inline">\(v = 1,\ldots,n\)</span> the probability of response <span class="math inline">\(x\)</span> on item <span class="math inline">\(i = 1,\ldots, k\)</span> is</p>
+<p><span class="math display">\[
+P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta+\beta_{ix})}{\sum_{l=1}^{m_i}\exp(l\theta+\beta_{il})}
+\]</span></p>
+<p>where each item <span class="math inline">\(i\)</span> has a certain number of response categories, denoted by <span class="math inline">\(m_i\)</span>.</p>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Frequently referred to as the Rating Scale Model (RSM) or the Partial Credit Model (PCM)</p></li></ol></aside></section>
+<section id="agenda" class="slide level2">
+<h2>Agenda</h2>
+<p>We demonstrate the functionality with an example using data from the The Skin Cancer Quality of Life (<span style="color: OrangeRed;">SCQoL</span>) Questionnaire.</p>
+<p>Using these data we show <span style="color: OrangeRed;">how to use R</span> to:</p>
+<ol type="1">
+<li>Estimate the Rasch model</li>
+<li>Test the Rasch model</li>
+<li>Test local dependence</li>
+<li>…</li>
+</ol>
+</section>
+<section id="overview-of-package" class="slide level2">
+<h2>Overview of package</h2>
+<p><span class="citation" data-cites="Linacre2022">Linacre (<a href="#/cicc-1" role="doc-biblioref" onclick="">2022</a>)</span> identified 11 R packages capable of Rasch estimation and analysis.</p>
+<p>We focus on</p>
+<ul>
+<li><code>eRm</code>: does conditional ML (like RUMM2030)</li>
+<li><code>TAM</code> an <code>ltm</code>: do MML (like ConQuest)</li>
+</ul>
+</section>
+<section id="data-and-instrument" class="slide level2">
+<h2>Data and instrument</h2>
+<p>Data used in this workshop are disease-specific quality of life (QoL) questionnaires increasingly used to provide patient-reported outcome measures in both malignant and non-malignant disease.</p>
+<h3 id="objective">OBJECTIVE</h3>
+<p>To create, validate and test the psychometrics of the Skin Cancer Quality of Life (SCQoL) questionnaire, which was designed to measure health-related QoL in patients with non-melanoma skin cancer affecting any area and undergoing any therapy.</p>
+</section>
+<section id="patient-sample" class="slide level2">
+<h2>Patient Sample</h2>
+<p>These data contain… <!--Of the 241 patients included, 82% (198/241) responded. Among the responders seven returned a blank questionnaire and declined to participate in the study, one patient was reported to have dementia, and two were reported dead by relatives. Patients having or having had MM (n = 3) and responders with more than one missing answer in the SCQoL (n = 8) were excluded. This provided 177/241 complete data sets (73%). Of the 177 included in the analysis, 81 (46%) were female and 96 (54%) male. The mean age was 71 years (range 41—95). The demographic characteristics of the patients participating in the study are shown in Table 1. Among the 177 answers only 3 questionnaires had one missing answer (for item 4, 8 and 9 respectively).--></p>
+
+<!--Briefly, these data contain 757 complete responses to the Rosenberg Self-Esteem scale providing measures of global self-esteem (Rosenberg, Citation1989). The Rosenberg Self-Esteem scale used here consists of 10 items, five of which were positively worded and five negatively worded. All items on the scale were rated on a 4-point Likert scale with verbal anchors of Strongly Disagree (0), Disagree (1), Agree (2) and Strongly Agree (3). The frequency of responses to each category are reported in Table 1. The survey respondents were an average age was 22.4 years (SD ±  7.2 years) ranging from 16 to 75 years. The sample was 42% male, 48% female and the remaining 10% did not disclose sex. The respondents were 67.9% Caucasian, 12.8% Black, 2.4% Hispanic, 3.4% Asian, 1.7% Multiracial, 0.3% other races and 11.5% did not report race.-->
+</section>
+<section id="data-management" class="slide level2">
+<h2>Data management</h2>
+<p>We load data:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/code-line-numbers_29c37b85edd4e51f160958521f2f0e39">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>SCQOL <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"SCQOL.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>The top six rows of our data are</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-1_05f93379fdcc6e72ca1395e375b40386">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">head</span>(SCQOL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 15
+  ID     SC01  SC02  SC03  SC04  SC05  SC06  SC07  SC08  SC09  DLQI SCTOTAL
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1 SC1       0     0     0     0     0     0     1     0     0     1       1
+2 SC2       1     1     0     0     0     0     0     0     1     2       3
+3 SC3       0     3     1     1     0     0     0     1     0     4       6
+4 SC4       2     2     2     2     0     1     2     2     2     2      15
+5 SC5       0     1     0     1     0     1     1     0     2     1       6
+6 SC6       2     3     2     3     2     0     1     1     0     3      14
+# … with 3 more variables: FUNCTION &lt;dbl&gt;, EMOTION &lt;dbl&gt;, CONTROL &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-2_ff778cf1068a0c200ff54710aac294a3">
+
+</div>
+</section>
+<section class="slide level2">
+
+<p>We create an object containing the items:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-3_bcc0ca8670fb0245eccfd57a8b25b769">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>items <span class="ot">&lt;-</span> SCQOL <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">'SC0'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-4_f8771f8b30023111234dc4a7f1cea6b6">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c9349bae854d28fe25fe" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c9349bae854d28fe25fe">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10"],[0,1,0,2,0,2,0,1,1,0],[0,1,3,2,1,3,0,0,0,2],[0,0,1,2,0,2,0,0,1,1],[0,0,1,2,1,3,0,0,1,2],[0,0,0,0,0,2,0,0,0,0],[0,0,0,1,1,0,0,0,2,0],[1,0,0,2,1,1,0,0,2,2],[0,0,1,2,0,1,0,0,0,0],[0,1,0,2,2,0,0,1,0,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>SC01<\/th>\n      <th>SC02<\/th>\n      <th>SC03<\/th>\n      <th>SC04<\/th>\n      <th>SC05<\/th>\n      <th>SC06<\/th>\n      <th>SC07<\/th>\n      <th>SC08<\/th>\n      <th>SC09<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"initComplete":"function(settings, json) {$(this.api().table().header()).css({'font-size': '12px',});}","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'12px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'12px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'12px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'12px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'12px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'12px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'12px'});\nvar value=data[8]; $(this.api().cell(row, 8).node()).css({'font-size':'12px'});\nvar value=data[9]; $(this.api().cell(row, 9).node()).css({'font-size':'12px'});\n}"}},"evals":["options.initComplete","options.rowCallback"],"jsHooks":[]}</script>
+</div>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>1. Estimate the Rasch model</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="estimate-the-rasch-model-1" class="slide level2">
+<h2>1. Estimate the Rasch model</h2>
+</section>
+<section id="the-extended-rasch-modelling-erm-package" class="slide level2">
+<h2>The “extended Rasch modelling” (<code>eRm</code>) package</h2>
+<p>The <code>eRm</code> package in R provides users with a considerable set of tools for Rasch modelling for scale evaluation and general modelling.</p>
+<p>We provide a brief introduction to Rasch modelling followed by a review of the key features of the <code>eRm</code> package for scale evaluation. <!--The ease of use and the advantages of the R environment make the eRm package an appealing, free option for rigorous Rasch modelling.--></p>
+</section>
+<section id="the-erm-package" class="slide level2">
+<h2>The <code>eRm</code> package</h2>
+<p>The <code>eRm</code> package uses conditional maximum likelihood (<span style="color: OrangeRed;">CML</span>) for the dichotomous and polytomous models. CML <span class="citation" data-cites="Andersen1972">(<a href="#/cicc-1" role="doc-biblioref" onclick="">E. B. Andersen 1972</a>)</span> may be used to estimate models for which there are sufficient statistics available, as is the case for the family of Rasch models. That is, the item mean and person mean are sufficient statistics for the item and person measures, respectively.</p>
+<!--Given this property of Rasch models, joint maximum likelihood (JML), or unconditional maximum likelihood (Wright & Stone, Citation1979), is also available and is employed by other Rasch software, such as WINSTEPS (Linacre, Citation2019b). However, JML cannot produce estimates for individuals with sum scores of zero or the maximum possible score (e.g., all items incorrect or all items correct), and the estimates produced are inconsistent and asymptotically normal (Andersen, Citation1973; Haberman, Citation1977, Citation2004). Additionally, the limitations of JML are due to the simultaneous estimation of item and person measures. On the other hand, CML does not have the same limitations as JML so the CML estimator can be viewed as a strength if considering different software for modeling. For instance, -->
+<p>CML can produce consistent maximum likelihood estimates because it separates the item and person parameter estimates by conditioning the estimation of the likelihood function on the person sufficient statistics (Andersen, Citation1972; de Ayala, Citation2009).</p>
+</section>
+<section class="slide level2">
+
+<p>The person measures are estimated in <code>eRm</code> in a step following the estimation of item measures using JML.</p>
+<p>This two-step process sidesteps the limitations of JML because (1) the parameters are not estimated simultaneously and (2) the item parameters estimated through CML can be treated as “known” (i.e., fixed) in order to estimate the person measures. <!--The two-step process uses the advantages of both estimation procedures.--></p>
+<p>The estimates for persons and items can be viewed in the person-item map using the <code>plotPImap</code> command. CML is used for the dichotomous (RM), partial credit (PCM) and rating scale (RSM) models as well as the linear versions of these models (LLTM, LPCM, LRSM; commands shown in parentheses).</p>
+</section>
+<section class="slide level2">
+
+<!--The scale is thought to measure a single underlying construct, or said another way, a unidimensional construct. The Rasch model was easily fit to these data and obtain the model results using the RM function (see below).-->
+<p>The Rasch model is fit to data using the <code>PCM</code> function from the <code>eRm</code> package:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-5_2fa3384421c68289e5f42b35dc16ae83">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Load data</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">library</span>(eRm)</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># Fit Rasch model</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>fit <span class="ot">&lt;-</span> <span class="fu">PCM</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="show-results-of-rm-estimation" class="slide level2">
+<h2>Show results of RM estimation</h2>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-6_55ec411f63f75bfb42731b44cdcda3be">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-7_b8e790cd41711800174d40fba9691f08">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Results of PCM estimation: 
+
+Call:  PCM(X = items) 
+
+Conditional log-likelihood: -504.624 
+Number of iterations: 53 
+Number of parameters: 25 
+
+Item (Category) Difficulty Parameters (eta): with 0.95 CI:
+        Estimate Std. Error lower CI upper CI
+SC01.c2    0.805      0.415   -0.009    1.619
+SC02.c1   -2.549      0.334   -3.205   -1.894
+SC02.c2   -2.964      0.391   -3.732   -2.197
+SC02.c3   -2.691      0.439   -3.551   -1.831
+SC03.c1   -0.696      0.260   -1.205   -0.186
+SC03.c2   -0.299      0.353   -0.990    0.393
+SC03.c3    1.676      0.650    0.402    2.950
+SC04.c1   -1.726      0.289   -2.292   -1.161
+SC04.c2   -1.987      0.348   -2.669   -1.306
+SC04.c3   -0.815      0.476   -1.748    0.118
+SC05.c1    2.465      0.514    1.457    3.472
+SC05.c2    3.348      0.734    1.909    4.787
+SC05.c3    3.720      0.762    2.227    5.212
+SC06.c1   -0.074      0.253   -0.570    0.422
+SC06.c2    1.422      0.468    0.505    2.338
+SC06.c3    3.850      1.036    1.819    5.880
+SC07.c1   -2.087      0.275   -2.627   -1.547
+SC07.c2   -1.197      0.388   -1.957   -0.437
+SC07.c3    0.016      0.552   -1.066    1.098
+SC08.c1    0.377      0.279   -0.170    0.924
+SC08.c2    1.329      0.441    0.464    2.194
+SC08.c3    2.727      0.679    1.397    4.058
+SC09.c1   -1.693      0.284   -2.250   -1.136
+SC09.c2   -1.773      0.353   -2.464   -1.082
+SC09.c3   -0.847      0.462   -1.752    0.058
+
+Item Easiness Parameters (beta) with 0.95 CI:
+             Estimate Std. Error lower CI upper CI
+beta SC01.c1    0.335      0.253   -0.162    0.831
+beta SC01.c2   -0.805      0.415   -1.619    0.009
+beta SC02.c1    2.549      0.334    1.894    3.205
+beta SC02.c2    2.964      0.391    2.197    3.732
+beta SC02.c3    2.691      0.439    1.831    3.551
+beta SC03.c1    0.696      0.260    0.186    1.205
+beta SC03.c2    0.299      0.353   -0.393    0.990
+beta SC03.c3   -1.676      0.650   -2.950   -0.402
+beta SC04.c1    1.726      0.289    1.161    2.292
+beta SC04.c2    1.987      0.348    1.306    2.669
+beta SC04.c3    0.815      0.476   -0.118    1.748
+beta SC05.c1   -2.465      0.514   -3.472   -1.457
+beta SC05.c2   -3.348      0.734   -4.787   -1.909
+beta SC05.c3   -3.720      0.762   -5.212   -2.227
+beta SC06.c1    0.074      0.253   -0.422    0.570
+beta SC06.c2   -1.422      0.468   -2.338   -0.505
+beta SC06.c3   -3.850      1.036   -5.880   -1.819
+beta SC07.c1    2.087      0.275    1.547    2.627
+beta SC07.c2    1.197      0.388    0.437    1.957
+beta SC07.c3   -0.016      0.552   -1.098    1.066
+beta SC08.c1   -0.377      0.279   -0.924    0.170
+beta SC08.c2   -1.329      0.441   -2.194   -0.464
+beta SC08.c3   -2.727      0.679   -4.058   -1.397
+beta SC09.c1    1.693      0.284    1.136    2.250
+beta SC09.c2    1.773      0.353    1.082    2.464
+beta SC09.c3    0.847      0.462   -0.058    1.752</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4c948819f962894fdacd" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4c948819f962894fdacd">{"x":null,"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="show-results-of-rm-estimation-1" class="slide level2">
+<h2>Show results of RM estimation</h2>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-8_6f2a589e71f9e156e0cf209d0ac18029">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">names</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "X"           "X01"         "model"       "loglik"      "npar"       
+ [6] "iter"        "convergence" "etapar"      "se.eta"      "hessian"    
+[11] "betapar"     "se.beta"     "W"           "call"       </code></pre>
+</div>
+</div>
+<p>Item (Category) Difficulty Parameters (eta):</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-9_cb4ef603cb04fa76f0d7f5e09ed3c1f5">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>fit<span class="sc">$</span>etapar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   SC01.c2    SC02.c1    SC02.c2    SC02.c3    SC03.c1    SC03.c2    SC03.c3 
+ 0.8051638 -2.5494861 -2.9642253 -2.6909648 -0.6955862 -0.2985234  1.6757847 
+   SC04.c1    SC04.c2    SC04.c3    SC05.c1    SC05.c2    SC05.c3    SC06.c1 
+-1.7264518 -1.9871956 -0.8147899  2.4645109  3.3480160  3.7197305 -0.0742441 
+   SC06.c2    SC06.c3    SC07.c1    SC07.c2    SC07.c3    SC08.c1    SC08.c2 
+ 1.4216546  3.8496035 -2.0872293 -1.1971882  0.0158101  0.3771348  1.3287858 
+   SC08.c3    SC09.c1    SC09.c2    SC09.c3 
+ 2.7274744 -1.6930711 -1.7729178 -0.8472615 </code></pre>
+</div>
+</div>
+</section>
+<section id="show-results-of-rm-estimation-2" class="slide level2">
+<h2>Show results of RM estimation</h2>
+<p>Item Easiness Parameters (beta):</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-10_51cd67d11d59e7c418b523ae8d1bcf9d">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>fit<span class="sc">$</span>betapar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>beta SC01.c1 beta SC01.c2 beta SC02.c1 beta SC02.c2 beta SC02.c3 beta SC03.c1 
+   0.3345343   -0.8051638    2.5494861    2.9642253    2.6909648    0.6955862 
+beta SC03.c2 beta SC03.c3 beta SC04.c1 beta SC04.c2 beta SC04.c3 beta SC05.c1 
+   0.2985234   -1.6757847    1.7264518    1.9871956    0.8147899   -2.4645109 
+beta SC05.c2 beta SC05.c3 beta SC06.c1 beta SC06.c2 beta SC06.c3 beta SC07.c1 
+  -3.3480160   -3.7197305    0.0742441   -1.4216546   -3.8496035    2.0872293 
+beta SC07.c2 beta SC07.c3 beta SC08.c1 beta SC08.c2 beta SC08.c3 beta SC09.c1 
+   1.1971882   -0.0158101   -0.3771348   -1.3287858   -2.7274744    1.6930711 
+beta SC09.c2 beta SC09.c3 
+   1.7729178    0.8472615 </code></pre>
+</div>
+</div>
+</section>
+<section id="note" class="slide level2">
+<h2>Note</h2>
+<p>The default settings fix the scale by fixing the sum of item easiness parameters to zero. The scale can easily be set by fixing the first easiness (beta) to 0 instead by using <code>sum0 = FALSE</code> as an argument in the function. These options provide users for flexibility in modeling and even greater flexibility can be achieved by utilizing the design matrix formulation.</p>
+</section>
+<section id="the-person-item-map" class="slide level2">
+<h2>The person-item map</h2>
+<p>Another useful feature for examining the relationship between persons and items is the person-item map. These figures help provide a representation of how the difficulty of items relates to the person-parameters for the fitted Rasch model.</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-11_fc87c0d8e074791ce7811d7690c51390">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">plotPImap</span>(fit, <span class="at">sorted =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This map is created using <code>plotPImap(fit, sorted = TRUE)</code>, where the argument <code>sorted = TRUE</code> is not necessary, but will help significantly with interpretation and identifying how items are distributed across the person parameter distributions.</p>
+</section>
+<section id="the-person-item-map-1" class="slide level2">
+<h2>The person-item map</h2>
+
+<img data-src="presentation_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
+<section id="model-diagnostics" class="slide level2">
+<h2>Model diagnostics</h2>
+<p>Different R packages offer an array of tests and statistics to assist with diagnosing multiple areas of potential model misfit, e.g.,</p>
+<ol type="1">
+<li>Information-weighted mean square (INFIT) and unweighted mean square (OUTFIT) estimates</li>
+<li>The Anderson likelihood ratio test (Andersen, Citation1973)</li>
+<li>The generalized Martin-Löf test</li>
+</ol>
+</section>
+<section id="infit-and-outfit" class="slide level2">
+<h2>1) INFIT and OUTFIT</h2>
+<p>Information-weighted mean square (INFIT) and unweighted mean square (OUTFIT) estimates are provided for each item and each person, which is customary in evaluating Rasch model-data fit. These estimates along with their <span class="math inline">\(\chi^2\)</span> values, degrees of freedom, p-value, and t-test statistics are available with the <code>itemfit</code> and <code>personfit</code> commands, respectively, for items and persons. The INFIT t test statistics can also be plotted for items or persons using the <code>plotPImap</code> command, in which users may plot with or without confidence intervals. This plot may be particularly helpful in examining many items or persons efficiently.</p>
+</section>
+<section id="the-anderson-likelihood-ratio-test" class="slide level2">
+<h2>2) The Anderson likelihood ratio test</h2>
+<p>Using the <code>LRtest</code> command. The procedure tests for person homogeneity, which can be an indication of differential item function or violations of monotonicity, by estimating the item measures using two or three subgroups from the sample. Two or three subgroups are the only options, but this will likely meet most users’ needs. Invariance between the two or three sets of parameter estimates supports the model-data fit. The <code>LRtest</code> command produces the LR value (i.e., <span class="math inline">\(\sim \chi^2\)</span>), degrees of freedom and p value.</p>
+</section>
+<section class="slide level2">
+
+<p>By default, two groups are formed based on raw scores above or below the median. Subgroups can also be created by the user based on a variable coded as a factor (e.g., sex) or based on the distribution of a quantitative variable. Because the test divides the sample into subgroups, a sufficiently large sample size is an important consideration to ensure that all subgroups are large enough.</p>
+</section>
+<section id="the-generalized-martin-löf-test" class="slide level2">
+<h2>3) The generalized Martin-Löf test</h2>
+<p>Available for testing dimensionality, which is a different approach from the conventional method of conducting principal components analysis on the standardized residual matrix. Martin-Löf (Citation1970) proposed a test of unidimensionality for dichotomous Rasch models that is a likelihood ratio test for comparing the null hypothesis of unidimensionality against the alternative hypothesis of two dimensions.</p>
+<p>Christensen, Bjorner, Kreiner, and Petersen (Citation2002) generalized the test for (1) polytomous models and (2) an alternative hypothesis with more than two dimensions.</p>
+</section>
+<section class="slide level2">
+
+<p>The MLoef procedure splits the items into two subgroups using the median (default) or mean of the item raw scores, or the user can specify a grouping of two or three subgroups of items.</p>
+<p>The command produces the log-likelihood value for each item grouping as well as for the overall model. The MLoef procedure also produces the likelihood ratio value, degrees of freedom and p value, which is the output that is examined when making a decision about the tenability of the unidimensionality assumption.</p>
+</section>
+<section class="slide level2">
+
+<p>The <code>MLoef</code> command is a large sample approximation (i.e., <span class="math inline">\(\sim \chi^2\)</span>), but the <code>eRm</code> package also provides an exact test using the <code>NPtest</code> command. This command offers 12 different methods for testing unidimensionality with the default method checking for local dependence based on inter-item correlations. (Verguts2000) showed that the Martin-Löf test is a bit conservative unless used with a large sample but that it has appropriate power when the split of items is correct. (Christensen2007) showed that the Martin-Löf test works well but notes the requirement of a very large sample for the null distribution to follow the asymptotic <span class="math inline">\(\chi^2\)</span> distribution. In light of the available research on the Martin-Löf test and its generalization, the exact test (<code>NPtest</code>) may be an attractive option for some users.</p>
+</section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>Exercise 1/4</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="exercise-14-1" class="slide level2">
+<h2>Exercise 1/4</h2>
+<h3 id="objective-1">OBJECTIVE</h3>
+<p>Create, validate, and test the psychometrics of the Actinic Keratosis Quality of Life (AKQoL) questionnaire, which was designed to measure health-related QoL in patients with actinic keratosis.</p>
+</section>
+<section id="paper" class="slide level2">
+<h2>Paper</h2>
+<p>Recreate <a href="http://doi.wiley.com/10.1111/bjd.12036">AKQOL</a>, Fig.2:</p>
+<pre><code>![[20230327123258.png]]</code></pre>
+</section>
+<section id="exercise-14-2" class="slide level2">
+<h2>Exercise 1/4</h2>
+<p>1.1) Load data <code>AKQOL.csv</code> into R.</p>
+<p>1.2) Fit the Rasch model using the <code>PCM()</code> function from the <code>eRm</code> package.</p>
+<p>1.3) Show results of the RM estimation using the <code>summary()</code> function.</p>
+<p>1.4) Examine the relationship between persons and items via the person-item map (<code>plotPImap()</code>).</p>
+</section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>2. Test the Rasch model</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="test-the-rasch-model-1" class="slide level2">
+<h2>2. Test the Rasch model</h2>
+<p>The point of the Rasch model is very often to test whether the assumptions (unidimensionality, local independence, sufficiency, no DIF and monotonicity) are met.</p>
+<p>Assumptions met <span class="math inline">\(\Rightarrow\)</span> Rasch model fit</p>
+<p>Rasch model misfit <span class="math inline">\(\Rightarrow\)</span> assumptions not met</p>
+</section>
+<section class="slide level2">
+
+<p>Testing the Rasch model in R can include the following steps</p>
+<ul>
+<li>Andersen’s conditional Likelihood Ratio Test</li>
+<li>Wald test</li>
+<li>subgroup homogeneity plots</li>
+<li>Infit and Outfit</li>
+<li>ICC plots compared to empirical ICC</li>
+<li>tests for local dependence</li>
+</ul>
+</section>
+<section id="the-item-characteristic-curves-iccs" class="slide level2">
+<h2>The item characteristic curves (ICCs)</h2>
+<p>For the given model, more detailed information about the fitted model can be investigated next.</p>
+<p>For dichotomous scales, the item characteristic curves for all items can be obtained using the <code>plotICC</code> command. The command plots the ICC for each item on a separate window so that each item can be inspected individually.</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-13_0fc2d538e94b8eb2e242a1fe7c6865a7">
+
+</div>
+<!-- @Karl: empirical ICC’s showing t↦P(yij=1|Sj=t) in stead of θ↦P(yij=1|θj=θ)?-->
+<p>All the ICCs can be plotted on the same window as well, using <code>plotjointICC</code>,</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-14_dfa8984178c9314e9750f43c488baaa8">
+
+</div>
+<!-- The ICC plot highlights how the items are distributed and ordered the item legend based on the difficulty. The difficulty in jointly plotting all the ICCs is that some of the curves can be difficult to see (e.g., item 7). -->
+</section>
+<section id="the-conditional-item-characteristic-curves-ciccs" class="slide level2">
+<h2>The conditional item characteristic curves (CICCs)</h2>
+<p>A Conditional ICC (CICC) is a curve describing the expected item mean as a function of the total score. It is possible to make an empirical CICC based on the observed data as both the empirical expected item score and the total scores can be calculated from the data. This empirical curve can then be compared to the model-based CICC to visualize item fit.</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-15_8b588174eb25a4bd2ee9c350aae09766">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">library</span>(RASCHplot)</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">CICCplot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="presentation_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
+<section id="martin-löf-test" class="slide level2">
+<h2>Martin-Löf test</h2>
+<p>The fit of these data to the Rasch model can be evaluated in numerous ways in the eRm package. The package supports tests such as Anderson’s likelihood ratio test, Wald-type tests, Martin-Löf test, various nonparametric tests, item and person fit indices, and graphical procedures. Testing for unidimensionality based on the fitted Rasch model using the Martin-Löf test resulted in</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-17_704128055a2d4ccf52d4418d193f69f6">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">MLoef</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Martin-Loef-Test (split criterion: median)
+LR-value: 75.943 
+Chi-square df: 167 
+p-value: 1 </code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>There is no evidence that unidimensionality should not be tenable.</p>
+<p>Other tests for unidimensionality are available through NPtest function. Then, if we find evidence of unidimensionality then an investigation of the item fit to the model could be the next step.</p>
+</section>
+<section id="item-fit-statistics" class="slide level2">
+<h2>Item fit statistics</h2>
+<p>The item fit information is obtained through a two-step process. First, we compute the person parameters along will all the residuals. Then, the investigation of the item fit statistics is a straightforward extension. The item fit statistics (i.e., INFIT/OUTFIT <span class="math inline">\(t\)</span> or MSQ) are obtained using</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-18_c1b6fda7b05c2dd5b9283e85ab118215">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">person.parameter</span>(fit)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">itemfit</span>(pp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-19_fed70912b2af1c52bdee361248e17669">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Itemfit Statistics: 
+       Chisq df p-value Outfit MSQ Infit MSQ Outfit t Infit t Discrim
+SC01  95.274 91   0.359      1.036     1.004    0.236   0.079   0.504
+SC02  73.911 91   0.904      0.803     0.829   -1.441  -1.282   0.618
+SC03  51.145 91   1.000      0.556     0.620   -2.662  -2.874   0.809
+SC04  69.673 91   0.953      0.757     0.747   -1.743  -1.942   0.696
+SC05  69.663 91   0.953      0.757     1.076    0.041   0.334   0.393
+SC06  59.351 91   0.996      0.645     0.812   -1.564  -1.067   0.635
+SC07  99.203 91   0.261      1.078     1.029    0.550   0.241   0.498
+SC08 100.944 91   0.223      1.097     1.076    0.399   0.449   0.514
+SC09  96.824 91   0.318      1.052     1.060    0.393   0.462   0.516</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>we cannot trust the P-values, because Chisq doeas not have a <span class="math inline">\(\chi^2\)</span>-distribution. Nobody knows the asymptotic distribution of INFIT and OUTFIT. We need the R package iarm (item analysis in Rasch models).</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-20_529ad37977bab310c8b23fbb5d26d998">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">library</span>(iarm)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">out_infit</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>this output shows <code>*</code> whenever a p-value is smaller then 5%.</p>
+</section>
+<section class="slide level2">
+
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-21_a90531201959b81e8fbf9932d6adaaa5">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(iarm)</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">out_infit</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     Outfit se    pvalue padj  sig  Infit se    pvalue padj  sig 
+SC01 1.123  0.213 0.564  1          1.07  0.146 0.633  1         
+SC02 0.923  0.137 0.572  1          0.947 0.137 0.701  1         
+SC03 0.605  0.188 0.036  0.647      0.679 0.15  0.032  0.582     
+SC04 0.857  0.139 0.304  1          0.841 0.14  0.254  1         
+SC05 1.097  0.96  0.919  1          1.37  0.375 0.324  1         
+SC06 0.694  0.247 0.215  1          0.882 0.174 0.498  1         
+SC07 1.176  0.15  0.239  1          1.139 0.153 0.364  1         
+SC08 1.269  0.321 0.401  1          1.215 0.191 0.261  1         
+SC09 1.197  0.141 0.161  1          1.202 0.141 0.151  1         
+
+P value adjustment: BH</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluating-item-fit-using-simulation" class="slide level2">
+<h2>Evaluating item fit using simulation</h2>
+<p>Simulate 1000 data sets based on <span class="math inline">\(\hat\beta\)</span> and <span class="math inline">\(\hat\theta\)</span> Look at empirical distribution of <span class="math inline">\(\chi^2\)</span> for item of interest</p>
+<p>Load R package:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-22_286200300f03f4eaf0defae029508acb">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(RASCHplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Create data matrix:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-23_2e3e73b5a79f51f17089457031f890d2">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-24_06a781252a50aca838f8350ad0cd1c8b">
+
+</div>
+</section>
+<section id="evaluating-item-fit-using-simulation-1" class="slide level2">
+<h2>Evaluating item fit using simulation</h2>
+<p>Simulate item responses and fit statistics:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-25_eff6f56adf004d7a75d04db721dd983b">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>beta <span class="ot">&lt;-</span> <span class="sc">-</span>fit<span class="sc">$</span>betapar</span>
+<span id="cb26-2"><a href="#cb26-2"></a>theta <span class="ot">&lt;-</span> pp<span class="sc">$</span>theta.table<span class="sc">$</span><span class="st">`</span><span class="at">Person Parameter</span><span class="st">`</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>outfits <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">out_infit</span>(fit)<span class="sc">$</span>Outfit,</span>
+<span id="cb26-4"><a href="#cb26-4"></a>                      <span class="at">y =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">9</span>))</span>
+<span id="cb26-5"><a href="#cb26-5"></a></span>
+<span id="cb26-6"><a href="#cb26-6"></a>x <span class="ot">&lt;-</span> <span class="fu">simRASCHstats</span>(beta, theta,</span>
+<span id="cb26-7"><a href="#cb26-7"></a>                   <span class="at">method.item =</span> <span class="st">"CML"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8"></a>                   <span class="at">method.person =</span> <span class="st">"MLE"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9"></a>                   <span class="at">B =</span> <span class="dv">100</span>, <span class="at">model =</span> <span class="st">"RMD"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="evaluating-item-fit-using-simulation-2" class="slide level2">
+<h2>Evaluating item fit using simulation</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">code</a></li><li><a href="#tabset-1-2">output (min)</a></li><li><a href="#tabset-1-3">output (max)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-26_775898ac24c3ce9e95864a844cffdc45">
+
+</div>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-27_b6502f8e617378115da7dd166152c75b">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">plot</span>(x) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> outfits, </span>
+<span id="cb27-3"><a href="#cb27-3"></a>             <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> outfits, <span class="fu">aes</span>(<span class="at">label =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(outfits)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">2</span>) </span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="fu">plot</span>(x, <span class="at">type =</span> <span class="st">"Outfit"</span>, <span class="at">extreme =</span> <span class="st">"max"</span>) <span class="sc">+</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> outfits, </span>
+<span id="cb27-8"><a href="#cb27-8"></a>             <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb27-9"><a href="#cb27-9"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> outfits, <span class="fu">aes</span>(<span class="at">label =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(outfits)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-28_391822368637debc4864bffd8d1685cf">
+<div class="cell-output-display">
+<p><img data-src="presentation_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-3">
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-29_f43991f4f7564eb0287f76b63089488e">
+<div class="cell-output-display">
+<p><img data-src="presentation_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="item-restscore" class="slide level2">
+<h2>Item-restscore</h2>
+<p>Item-total correlations and item-restscore correlations are routinely reported in classical test theory. Kreiner (2011) used the simple structure in the Rasch model to compute the expected values of the item-restscore correlation:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-30_1fd4888dd4aa796457dc20c1b7921bb1">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">item_restscore</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-31_923c799d0b8c6bfa77e2d0c8af81e23f">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">item_restscore</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     observed expected se     pvalue padj.BH sig
+SC01 0.5040   0.5882   0.0976 0.3878 0.6160     
+SC02 0.6527   0.6288   0.0613 0.6963 0.7697     
+SC03 0.7866   0.6082   0.0591 0.0026 0.0230  *  
+SC04 0.6849   0.6190   0.0607 0.2778 0.6160     
+SC05 0.6079   0.6928   0.1149 0.4602 0.6160     
+SC06 0.7044   0.5880   0.0727 0.1098 0.4941     
+SC07 0.5647   0.6168   0.0736 0.4791 0.6160     
+SC08 0.5864   0.6132   0.0916 0.7697 0.7697     
+SC09 0.5409   0.6199   0.0805 0.3264 0.6160     </code></pre>
+</div>
+</div>
+</section>
+<section id="icc-plots-compared-to-empirical-icc" class="slide level2">
+<h2>ICC plots compared to empirical ICC</h2>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-32_9b622a4e360f6baef2195dfd7b9e19d5">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">plotICC</span>(fit,</span>
+<span id="cb31-2"><a href="#cb31-2"></a>        <span class="at">item.subset =</span> <span class="fu">c</span>(<span class="dv">1</span>),</span>
+<span id="cb31-3"><a href="#cb31-3"></a>        <span class="at">empICC =</span> <span class="fu">list</span>(<span class="st">"raw"</span>),</span>
+<span id="cb31-4"><a href="#cb31-4"></a>        <span class="at">empCI =</span> <span class="fu">list</span>(<span class="at">gamma=</span><span class="fl">0.95</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb31-5"><a href="#cb31-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<!--This plot shows the item characteristic curve for the item. The x-axis show the ability continuum the y-axis the response probability. The continuous line describes the probability to respond correctly to the problem given a level of ability. The difficulty of the item is the where the probability of a correct response equals 0.5. The option empICC="raw" also plots the relative frequencies of positive responses for each rawscore group at the position of the corresponding ability level. The blue dotted lines represent the 95% confidence level for the relative frequencies and are shown if options are provided if empCI = is specified.-->
+<img data-src="presentation_files/figure-revealjs/unnamed-chunk-32-1.png" width="960" class="r-stretch"></section>
+<section id="visualizing-rasch-item-fit-using-conditional-icc" class="slide level2">
+<h2>Visualizing Rasch item fit using conditional ICC</h2>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-33_38502868b7f0fa3263fc1e52612b939f">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">library</span>(RASCHplot)</span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="fu">CICCplot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$SC01</code></pre>
+</div>
+
+</div>
+<img data-src="presentation_files/figure-revealjs/unnamed-chunk-33-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>Exercise 2/4</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="exercise-24-1" class="slide level2">
+<h2>Exercise 2/4</h2>
+<p>2.1)</p>
+<p>2.2)</p>
+<p>2.3)</p>
+<p>2.4)</p>
+</section></section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>FIKA</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>3. Test local dependence</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="test-local-dependence-1" class="slide level2">
+<h2>3. Test local dependence</h2>
+</section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>Exercise 3/4</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="exercise-34-1" class="slide level2">
+<h2>Exercise 3/4</h2>
+<p>3.1)</p>
+<p>3.2)</p>
+<p>3.3)</p>
+<p>3.4)</p>
+</section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>Dichotomous example</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="dichotomous-example-1" class="slide level2">
+<h2>Dichotomous example</h2>
+<p>We load data:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-35_f5a868ef76613f1c41ba6a9700e1313f">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb34-2"><a href="#cb34-2"></a>SCQOL <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"SCQOL01.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>The top six rows of our data are</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-36_afb5252e10a396222d5fbd9c9cf1f652">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">head</span>(SCQOL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 16
+   ...1 ID     SC01  SC02  SC03  SC04  SC05  SC06  SC07  SC08  SC09  DLQI
+  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     1 SC1       1     1     1     1     1     1     0     1     1     1
+2     2 SC2       0     0     1     1     1     1     1     1     0     2
+3     3 SC3       1     0     0     0     1     1     1     0     1     4
+4     4 SC4       0     0     0     0     1     0     0     0     0     2
+5     5 SC5       1     0     1     0     1     0     0     1     0     1
+6     6 SC6       0     0     0     0     0     1     0     0     1     3
+# … with 4 more variables: SCTOTAL &lt;dbl&gt;, FUNCTION &lt;dbl&gt;, EMOTION &lt;dbl&gt;,
+#   CONTROL &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-37_7662341089c9f6717419eafc693ff43c">
+
+</div>
+<p>Many of the responses are 1’s, which makes sense given that a large proportion of responses are not on the “Not at all” side of the response scale. Based on the agreeable response versus a disagreeable response, these data may be reflective of a person’s level of QoL.</p>
+</section>
+<section class="slide level2">
+
+<p>We create an object containing the items:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-38_9f790484e64e7f61ddd5a42be6cfb793">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>items <span class="ot">&lt;-</span> SCQOL <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">'SC0'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-39_983bc61550864c80773e8ce0ab14ec07">
+<div class="cell-output-display">
+
+<div id="nygkwoeclw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#nygkwoeclw .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nygkwoeclw .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nygkwoeclw .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nygkwoeclw .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nygkwoeclw .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nygkwoeclw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nygkwoeclw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nygkwoeclw .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nygkwoeclw .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nygkwoeclw .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nygkwoeclw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nygkwoeclw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nygkwoeclw .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nygkwoeclw .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nygkwoeclw .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nygkwoeclw .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nygkwoeclw .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nygkwoeclw .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nygkwoeclw .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nygkwoeclw .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nygkwoeclw .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nygkwoeclw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nygkwoeclw .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nygkwoeclw .gt_left {
+  text-align: left;
+}
+
+#nygkwoeclw .gt_center {
+  text-align: center;
+}
+
+#nygkwoeclw .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nygkwoeclw .gt_font_normal {
+  font-weight: normal;
+}
+
+#nygkwoeclw .gt_font_bold {
+  font-weight: bold;
+}
+
+#nygkwoeclw .gt_font_italic {
+  font-style: italic;
+}
+
+#nygkwoeclw .gt_super {
+  font-size: 65%;
+}
+
+#nygkwoeclw .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#nygkwoeclw .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nygkwoeclw .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nygkwoeclw .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nygkwoeclw .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nygkwoeclw .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nygkwoeclw .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" style="table-layout: fixed;">
+  <colgroup>
+    <col style="width:50px;">
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+  </colgroup>
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC01">SC01</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC02">SC02</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC03">SC03</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC04">SC04</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC05">SC05</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC06">SC06</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC07">SC07</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC08">SC08</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SC09">SC09</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="SC01" class="gt_row gt_right">1</td>
+<td headers="SC02" class="gt_row gt_right">1</td>
+<td headers="SC03" class="gt_row gt_right">1</td>
+<td headers="SC04" class="gt_row gt_right">1</td>
+<td headers="SC05" class="gt_row gt_right">1</td>
+<td headers="SC06" class="gt_row gt_right">1</td>
+<td headers="SC07" class="gt_row gt_right">0</td>
+<td headers="SC08" class="gt_row gt_right">1</td>
+<td headers="SC09" class="gt_row gt_right">1</td></tr>
+    <tr><td headers="SC01" class="gt_row gt_right">0</td>
+<td headers="SC02" class="gt_row gt_right">0</td>
+<td headers="SC03" class="gt_row gt_right">1</td>
+<td headers="SC04" class="gt_row gt_right">1</td>
+<td headers="SC05" class="gt_row gt_right">1</td>
+<td headers="SC06" class="gt_row gt_right">1</td>
+<td headers="SC07" class="gt_row gt_right">1</td>
+<td headers="SC08" class="gt_row gt_right">1</td>
+<td headers="SC09" class="gt_row gt_right">0</td></tr>
+    <tr><td headers="SC01" class="gt_row gt_right">1</td>
+<td headers="SC02" class="gt_row gt_right">0</td>
+<td headers="SC03" class="gt_row gt_right">0</td>
+<td headers="SC04" class="gt_row gt_right">0</td>
+<td headers="SC05" class="gt_row gt_right">1</td>
+<td headers="SC06" class="gt_row gt_right">1</td>
+<td headers="SC07" class="gt_row gt_right">1</td>
+<td headers="SC08" class="gt_row gt_right">0</td>
+<td headers="SC09" class="gt_row gt_right">1</td></tr>
+    <tr><td headers="SC01" class="gt_row gt_right">0</td>
+<td headers="SC02" class="gt_row gt_right">0</td>
+<td headers="SC03" class="gt_row gt_right">0</td>
+<td headers="SC04" class="gt_row gt_right">0</td>
+<td headers="SC05" class="gt_row gt_right">1</td>
+<td headers="SC06" class="gt_row gt_right">0</td>
+<td headers="SC07" class="gt_row gt_right">0</td>
+<td headers="SC08" class="gt_row gt_right">0</td>
+<td headers="SC09" class="gt_row gt_right">0</td></tr>
+    <tr><td headers="SC01" class="gt_row gt_right">1</td>
+<td headers="SC02" class="gt_row gt_right">0</td>
+<td headers="SC03" class="gt_row gt_right">1</td>
+<td headers="SC04" class="gt_row gt_right">0</td>
+<td headers="SC05" class="gt_row gt_right">1</td>
+<td headers="SC06" class="gt_row gt_right">0</td>
+<td headers="SC07" class="gt_row gt_right">0</td>
+<td headers="SC08" class="gt_row gt_right">1</td>
+<td headers="SC09" class="gt_row gt_right">0</td></tr>
+    <tr><td headers="SC01" class="gt_row gt_right">0</td>
+<td headers="SC02" class="gt_row gt_right">0</td>
+<td headers="SC03" class="gt_row gt_right">0</td>
+<td headers="SC04" class="gt_row gt_right">0</td>
+<td headers="SC05" class="gt_row gt_right">0</td>
+<td headers="SC06" class="gt_row gt_right">1</td>
+<td headers="SC07" class="gt_row gt_right">0</td>
+<td headers="SC08" class="gt_row gt_right">0</td>
+<td headers="SC09" class="gt_row gt_right">1</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<!--The scale is thought to measure a single underlying construct, or said another way, a unidimensional construct. The Rasch model was easily fit to these data and obtain the model results using the RM function (see below).-->
+<p>The Rasch model is fit to data using the <code>RM</code> function from the <code>eRm</code> package:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-40_6629b3f6301dcd655e6b85742582d1ee">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Load data</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="fu">library</span>(eRm)</span>
+<span id="cb38-3"><a href="#cb38-3"></a></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="co"># Fit Rasch model</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a>fit <span class="ot">&lt;-</span> <span class="fu">RM</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-41_0878458babe5716c3dd666f67e1d6a90">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># Show results of RM estimation</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-42_c2e424157e30242afb821a1f25c73a42">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Results of RM estimation: 
+
+Call:  RM(X = items) 
+
+Conditional log-likelihood: -225.9824 
+Number of iterations: 15 
+Number of parameters: 8 
+
+Item (Category) Difficulty Parameters (eta): with 0.95 CI:
+     Estimate Std. Error lower CI upper CI
+SC02    2.114      0.300    1.526    2.702
+SC03   -0.009      0.244   -0.488    0.470
+SC04    1.243      0.261    0.732    1.754
+SC05   -3.150      0.402   -3.938   -2.362
+SC06   -0.916      0.253   -1.412   -0.421
+SC07    1.387      0.265    0.867    1.906
+SC08   -1.254      0.261   -1.765   -0.743
+SC09    1.173      0.259    0.666    1.680
+
+Item Easiness Parameters (beta) with 0.95 CI:
+          Estimate Std. Error lower CI upper CI
+beta SC01    0.588      0.248    0.102    1.074
+beta SC02   -2.114      0.300   -2.702   -1.526
+beta SC03    0.009      0.244   -0.470    0.488
+beta SC04   -1.243      0.261   -1.754   -0.732
+beta SC05    3.150      0.402    2.362    3.938
+beta SC06    0.916      0.253    0.421    1.412
+beta SC07   -1.387      0.265   -1.906   -0.867
+beta SC08    1.254      0.261    0.743    1.765
+beta SC09   -1.173      0.259   -1.680   -0.666</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-30f2755bf08d6fc46562" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-30f2755bf08d6fc46562">{"x":null,"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-43_1afbaf9c7745d8fa3963bc7c12efa4ee">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">names</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "X"           "X01"         "model"       "loglik"      "npar"       
+ [6] "iter"        "convergence" "etapar"      "se.eta"      "hessian"    
+[11] "betapar"     "se.beta"     "W"           "call"       </code></pre>
+</div>
+</div>
+<p>Item (Category) Difficulty Parameters (eta):</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-44_01d709c28668ef8924f151d2136ccd9f">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>fit<span class="sc">$</span>etapar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        SC02         SC03         SC04         SC05         SC06         SC07 
+ 2.113940170 -0.008710932  1.243258218 -3.150069040 -0.916295932  1.386739984 
+        SC08         SC09 
+-1.254001758  1.172938420 </code></pre>
+</div>
+</div>
+<p>Item Easiness Parameters (beta):</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-45_b36519e4cab5d7da7f4ee03df1a6ca40">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>fit<span class="sc">$</span>betapar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   beta SC01    beta SC02    beta SC03    beta SC04    beta SC05    beta SC06 
+ 0.587799130 -2.113940170  0.008710932 -1.243258218  3.150069040  0.916295932 
+   beta SC07    beta SC08    beta SC09 
+-1.386739984  1.254001758 -1.172938420 </code></pre>
+</div>
+</div>
+</section>
+<section id="the-item-characteristic-curves-iccs-1" class="slide level2">
+<h2>The item characteristic curves (ICCs)</h2>
+<p>For dichotomous scales, the item characteristic curves for all items can be obtained using the <code>plotICC</code> command. The command plots the ICC for each item on a separate window so that each item can be inspected individually.</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-46_581177bd5b7ad070ef085fed793d3269">
+
+</div>
+<!-- @Karl: empirical ICC’s showing t↦P(yij=1|Sj=t) in stead of θ↦P(yij=1|θj=θ)?-->
+</section>
+<section class="slide level2">
+
+<p>All the ICCs can be plotted on the same window as well, using <code>plotjointICC</code>:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-47_bfe61259089ccc6e311a3958b917cfef">
+
+</div>
+<!-- The ICC plot highlights how the items are distributed and ordered the item legend based on the difficulty. The difficulty in jointly plotting all the ICCs is that some of the curves can be difficult to see (e.g., item 7). -->
+</section>
+<section id="test-local-dependence-2" class="slide level2">
+<h2>Test local dependence</h2>
+<p>Testing local dependence can be done by removing an item, fitting the Rasch model to the remaining items, splitting with respect to the removed item. The general method for testing local dependence in IRT is Yens Q3</p>
+<p>We use the sirt (supplementary IRT) package for this:</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-48_62dceb6c3bdf09a7b71987f3ec139993">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">library</span>(sirt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>We fit a Rasch model using <code>sirt</code> and save estimates <span class="math inline">\(\hat\beta\)</span> of item parameters and estimate person locations <span class="math inline">\(\hat\theta\)</span> (we use Warms weighted MLE)</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-49_3c4e27fe77d4d2b67ef2c0df77d68d7d">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>itms <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(items)</span>
+<span id="cb48-2"><a href="#cb48-2"></a>mod <span class="ot">&lt;-</span> sirt<span class="sc">::</span><span class="fu">rasch.mml2</span>(itms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------------------------------------------------------------
+Semiparametric Marginal Maximum Likelihood Estimation 
+Raschtype Model with generalized logistic link function: alpha1= 0 , alpha2= 0  
+------------------------------------------------------------
+...........................................................
+Iteration 1     2023-03-24 12:34:22 
+   Deviance=944.0993
+    Maximum b parameter change=0.485539 
+...........................................................
+Iteration 2     2023-03-24 12:34:22 
+   Deviance=925.8288 | Deviance change=18.270519
+    Maximum b parameter change=0.137751 
+...........................................................
+Iteration 3     2023-03-24 12:34:22 
+   Deviance=917.0894 | Deviance change=8.739389
+    Maximum b parameter change=0.123445 
+...........................................................
+Iteration 4     2023-03-24 12:34:22 
+   Deviance=912.2001 | Deviance change=4.889347
+    Maximum b parameter change=0.101295 
+...........................................................
+Iteration 5     2023-03-24 12:34:22 
+   Deviance=909.6828 | Deviance change=2.51732
+    Maximum b parameter change=0.077439 
+...........................................................
+Iteration 6     2023-03-24 12:34:22 
+   Deviance=908.4566 | Deviance change=1.226168
+    Maximum b parameter change=0.056295 
+...........................................................
+Iteration 7     2023-03-24 12:34:22 
+   Deviance=907.8793 | Deviance change=0.577297
+    Maximum b parameter change=0.039492 
+...........................................................
+Iteration 8     2023-03-24 12:34:22 
+   Deviance=907.6117 | Deviance change=0.267647
+    Maximum b parameter change=0.027037 
+...........................................................
+Iteration 9     2023-03-24 12:34:22 
+   Deviance=907.4874 | Deviance change=0.124284
+    Maximum b parameter change=0.018221 
+...........................................................
+Iteration 10     2023-03-24 12:34:22 
+   Deviance=907.4287 | Deviance change=0.058704
+    Maximum b parameter change=0.012169 
+...........................................................
+Iteration 11     2023-03-24 12:34:22 
+   Deviance=907.4001 | Deviance change=0.028582
+    Maximum b parameter change=0.008093 
+...........................................................
+Iteration 12     2023-03-24 12:34:22 
+   Deviance=907.3856 | Deviance change=0.014486
+    Maximum b parameter change=0.005381 
+...........................................................
+Iteration 13     2023-03-24 12:34:22 
+   Deviance=907.3779 | Deviance change=0.007679
+    Maximum b parameter change=0.003586 
+...........................................................
+Iteration 14     2023-03-24 12:34:22 
+   Deviance=907.3737 | Deviance change=0.004257
+    Maximum b parameter change=0.002401 
+...........................................................
+Iteration 15     2023-03-24 12:34:22 
+   Deviance=907.3712 | Deviance change=0.002455
+    Maximum b parameter change=0.001619 
+...........................................................
+Iteration 16     2023-03-24 12:34:22 
+   Deviance=907.3698 | Deviance change=0.001462
+    Maximum b parameter change=0.001101 
+...........................................................
+Iteration 17     2023-03-24 12:34:22 
+   Deviance=907.3689 | Deviance change=0.000893
+    Maximum b parameter change=0.000756 
+...........................................................
+Iteration 18     2023-03-24 12:34:22 
+   Deviance=907.3683 | Deviance change=0.000555
+    Maximum b parameter change=0.000525 
+...........................................................
+Iteration 19     2023-03-24 12:34:22 
+   Deviance=907.368 | Deviance change=0.000349
+    Maximum b parameter change=0.000369 
+...........................................................
+Iteration 20     2023-03-24 12:34:22 
+   Deviance=907.3677 | Deviance change=0.000222
+    Maximum b parameter change=0.000263 
+...........................................................
+Iteration 21     2023-03-24 12:34:22 
+   Deviance=907.3676 | Deviance change=0.000142
+    Maximum b parameter change=0.000189 
+...........................................................
+Iteration 22     2023-03-24 12:34:22 
+   Deviance=907.3675 | Deviance change=9.1e-05
+    Maximum b parameter change=0.000138 
+...........................................................
+Iteration 23     2023-03-24 12:34:22 
+   Deviance=907.3674 | Deviance change=5.9e-05
+    Maximum b parameter change=0.000102 
+...........................................................
+Iteration 24     2023-03-24 12:34:22 
+   Deviance=907.3674 | Deviance change=3.8e-05
+    Maximum b parameter change=7.7e-05 
+------------------------------------------------------------
+Start: 2023-03-24 12:34:22 
+End: 2023-03-24 12:34:22 
+Time difference of 0.06056738 secs
+Difference: 0.06056738 
+------------------------------------------------------------</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>beta <span class="ot">&lt;-</span> mod<span class="sc">$</span>item<span class="sc">$</span>b</span>
+<span id="cb50-2"><a href="#cb50-2"></a>mod.wle <span class="ot">&lt;-</span> sirt<span class="sc">::</span><span class="fu">wle.rasch</span>(<span class="at">dat =</span> items , <span class="at">b =</span> beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+WLE Reliability= 0.75 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>eta <span class="ot">&lt;-</span> mod.wle<span class="sc">$</span>theta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and now we can calculate Yen’s Q3 statistic</p>
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-50_76680146436f3107039d42a526e81bd7">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>q3 <span class="ot">&lt;-</span> sirt<span class="sc">::</span><span class="fu">Q3</span>(<span class="at">dat =</span> items, <span class="at">theta =</span> eta , <span class="at">b =</span> beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell" data-hash="presentation_cache/revealjs/unnamed-chunk-51_ca595248c671a97b8ad3e172c6a06483">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>q3 <span class="ot">&lt;-</span> sirt<span class="sc">::</span><span class="fu">Q3</span>(<span class="at">dat =</span> items, <span class="at">theta =</span> eta , <span class="at">b =</span> beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Yen's Q3 Statistic based on an estimated theta score 
+*** 9 Items | 36 item pairs
+*** Q3 Descriptives
+     M     SD    Min    10%    25%    50%    75%    90%    Max 
+-0.118  0.131 -0.422 -0.282 -0.194 -0.110 -0.044  0.002  0.240 </code></pre>
+</div>
+</div>
+<p>Conventional interpretation: correlations should be close to zero. A large value is evidence of a problem with the scale, but since we do not know the asymptotic distribution we have to rely on a rule of thumb to decide when to reject model fit. An extensive simulation study indicated that “0.2 above the average” works well in many situations.</p>
+</section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>Exercise 4/4</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="exercise-44-1" class="slide level2">
+<h2>Exercise 4/4</h2>
+<p>4.1) Load dichotomised data <code>AKQOL01.csv</code> into R</p>
+<p>4.2) Fit a Rasch model using the <code>RM()</code> function</p>
+<p>4.3) Visualise item fit using, e.g., <code>CICCplot()</code> from the <code>RASCHplot</code> package or <code>plotICC()</code> and <code>plotjointICC()</code> from the <code>eRm</code> package.</p>
+<p>4.4) Calculate Yen’s Q3 statistic</p>
+</section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>CICC</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>3. Test local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 3/4</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Dichotomous example</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 4/4</p>
+</div></li>
+<li><div class="agenda-active">
+<p>CICC</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="cicc-1" class="slide level2 smaller scrollable" data-visibility="uncounted">
+<h2>CICC</h2>
+<p>the distribution of the total score is</p>
+<p><span class="math display">\[
+P(R_{v}=r|\theta_v=\theta)=\frac{\exp(r\theta)\gamma_r(\boldsymbol{\beta})}{\prod_{i=1}^k\sum_{l=1}^{m_i}\exp(l\theta+\beta_{il})}
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{\beta}\)</span> is the vector of all item (easiness) parameters and</p>
+<p><span class="math display">\[
+\gamma_r(\boldsymbol{\beta})=\sum_{(x_i)}\exp\left(\sum_{i=1}^k\beta_{ix_i}\right)
+\]</span></p>
+<p>are so-called <span class="math inline">\(\gamma\)</span>-functions (Andersen, 1995; formula 15.20).. In (<span class="math inline">\(\ref{gamma}\)</span>) the summation is over the set <span class="math inline">\(\{(x_i):\sum_{i=1}^kx_i=r\}\)</span> of all response vectors with total score <span class="math inline">\(r\)</span> and the <span class="math inline">\(\gamma\)</span>-functions can be calculated using the recursive formula</p>
+<p><span class="math display">\[
+\gamma_r(\boldsymbol{\beta})=\gamma_r^{(i)}(\boldsymbol{\beta})+\sum_{x=1}^{m_i}\exp(\beta_{ix})\gamma_{r-x}^{(i)},
+\]</span></p>
+<p>where <span class="math inline">\(\gamma_{r-x}^{(i)}\)</span> is the <span class="math inline">\(\gamma\)</span>-function (<span class="math inline">\(\ref{gamma}\)</span>) evaluated without item <span class="math inline">\(i\)</span>. This means that the conditional probabilities of item scores given total scores can be written</p>
+<p><span class="math display">\[
+P(X_{vi}=x|R_{v}=r)=\frac{\exp(\beta_{ix})\gamma_{r-x}^{(i)}(\boldsymbol{\beta})}{\gamma_r(\boldsymbol{\beta})}
+\]</span></p>
+<p>Note that (<span class="math inline">\(\ref{condprob}\)</span>) is independent of the value of <span class="math inline">\(\theta_v\)</span> due to the sufficiency of the total score in the Rasch model. Based on (<span class="math inline">\(\ref{condprob}\)</span>) it is straight-forward to calculate the conditional expectation of item scores given total scores</p>
+<p><span class="math display">\[
+E_{ri}=E(X_{rv}|R_v=r)=
+\sum_{x=0}^{m_i} x\frac{\exp(\beta_{ix})\gamma_{r-x}^{(i)}(\boldsymbol{\beta})}{\gamma_r(\boldsymbol{\beta})}
+\]</span></p>
+<p>(Andersen, 1995; formula 15.22).</p>
+<div class="footer footer-default">
+
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Andersen1972" class="csl-entry" role="doc-biblioentry">
+Andersen, E. B. 1972. <span>“The Numerical Solution of a Set of Conditional Estimation Equations.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 34. <a href="https://doi.org/10.1111/j.2517-6161.1972.tb00887.x">https://doi.org/10.1111/j.2517-6161.1972.tb00887.x</a>.
+</div>
+<div id="ref-Andersen1977" class="csl-entry" role="doc-biblioentry">
+Andersen, Erling B. 1977. <span>“Sufficient Statistics and Latent Trait Models.”</span> <em>Psychometrika</em> 42. <a href="https://doi.org/10.1007/BF02293746">https://doi.org/10.1007/BF02293746</a>.
+</div>
+<div id="ref-Linacre2022" class="csl-entry" role="doc-biblioentry">
+Linacre, J. M. 2022. <span>“<span class="nocase">R Statistics: survey and review of packages for the estimation of Rasch models</span>.”</span> <em>Int J Med Educ</em> 13: 171–75. <a href="https://doi.org/10.5116/ijme.629d.d88f">https://doi.org/10.5116/ijme.629d.d88f</a>.
+</div>
+</div>
+</section></section>
+
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="presentation_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="presentation_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="presentation_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="presentation_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
+  <script src="presentation_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="presentation_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="presentation_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="presentation_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="presentation_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'pointer': {"key":"q","color":"#ff4500","pointerSize":20,"alwaysVisible":false},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealPointer, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

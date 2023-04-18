@@ -1,0 +1,74 @@
+{
+    "sources": [
+        {
+            "DOI": "10.5116/ijme.629d.d88f",
+            "URL": "http://www.ijme.net/archive/13/r-statistics-rasch-models/",
+            "author": [
+                {
+                    "family": "Linacre",
+                    "given": "J. M."
+                }
+            ],
+            "container-title": "Int J Med Educ",
+            "id": "Linacre2022",
+            "issue": "",
+            "issued": {
+                "date-parts": [
+                    [
+                        2022
+                    ]
+                ]
+            },
+            "page": "171-175",
+            "title": "R Statistics: survey and review of packages for the estimation of Rasch models",
+            "type": "article-journal",
+            "volume": "13"
+        },
+        {
+            "DOI": "10.1007/BF02293746",
+            "ISSN": "00333123",
+            "abstract": "For questionnaires with two answer categories, it has been proven in complete generality that if a minimal sufficient statistic exists for the individual parameter and if it is the same statistic for all values of the item parameters, then the raw score (or the number of correct answers) is the minimal sufficient statistic. It follows that the model must by of the Rasch type with logistic item characteristic curves and equal item-discriminating powers. This paper extends these results to multiple choice questionnaires. It is shown that the minimal sufficient statistic for the individual parameter is a function of the so-called score vector. It is also shown that the so-called equidistant scoring is the only scoring of a questionnaire that allows for a real valued sufficient statistic that is independent of the item parameters, if a certain ordering property for the sufficient statistic holds. © 1977 Psychometric Society.",
+            "author": [
+                {
+                    "family": "Andersen",
+                    "given": "Erling B."
+                }
+            ],
+            "container-title": "Psychometrika",
+            "id": "Andersen1977",
+            "issued": {
+                "date-parts": [
+                    [
+                        1977
+                    ]
+                ]
+            },
+            "title": "Sufficient statistics and latent trait models",
+            "type": "article-journal",
+            "volume": "42"
+        },
+        {
+            "DOI": "10.1111/j.2517-6161.1972.tb00887.x",
+            "abstract": "In this paper we discuss the numerical solution of a set of conditional likeli- hood equations essential for the statistical analysis of psychological questionnaires. The model underlying this type of statistical analysis is described in detail and the conditional maximum-likelihood method that is used for estimating item parameters is discussed in relation to the chosen model. The conditional likelihood equations contain a generalized version of the elementary symmetric functions. The main problem in solving the estimation equations consists in finding a rapid recursive way to compute these functions. Such a procedure is described in the paper. In the final section of the paper the developed method is illustrated by a numerical example.",
+            "author": [
+                {
+                    "family": "Andersen",
+                    "given": "E. B."
+                }
+            ],
+            "container-title": "Journal of the Royal Statistical Society: Series B (Methodological)",
+            "id": "Andersen1972",
+            "issued": {
+                "date-parts": [
+                    [
+                        1972
+                    ]
+                ]
+            },
+            "title": "The numerical solution of a set of conditional estimation equations",
+            "type": "article-journal",
+            "volume": "34"
+        }
+    ],
+    "project_biblios": []
+}

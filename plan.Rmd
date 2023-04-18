@@ -1,0 +1,352 @@
+---
+title: "Workshop - PMhealth"
+author: "Ann-Sophie Buchardt"
+date: "2023-03-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## TO DO
+
+-[x] Title: Rasch in R
+-[] Packages you will use? 
+  - eRm og iarm
+-[] It would also be valuable if you can share the data file for the hands-on exercises. 
+  - AKQOL og SCQOL
+
+## Plan
+
+June 15th: 
+
+- 09.00–09.45 “Rasch in R” (Ann-Sophie Buchardt)
+- 09.45–10.00 Fika
+- 10.00–11.15 Rasch in R (Ann-Sophie Buchardt)
+
+
+## Abstract
+
+
+## Packages
+
+```{r}
+library(eRm)
+library(iarm)
+library(RASCHplot)
+```
+
+
+
+# Agenda
+
+## Rasch in R
+
+ 
+
+### 1. Introduction, estimation
+
+- very short introduction
+
+- Estimating Rasch in R
+
+- 11 R packages capable of Rasch estimation and analysis [Linacre](.)
+
+                - `eRm` conditional like RUMM2030
+
+                - `TAM`, `ltm`, .. MML like ConQuest
+
+- data example [AKQOL](http://doi.wiley.com/10.1111/bjd.12036), Fig.2:
+
+    ![[20230327123258.png]]
+
+    - how to use eRm to estimate parameters and make plots (`plotPImap`, `WrightMap`) - WrightMap on r-bloggers
+
+#### Exercise: use eRm to estimate parameters and make plots
+
+ 
+
+### 2. Testing the Rasch model  in R
+
+- andersen test
+
+- itemfit
+
+- CICCplot
+
+- overall model fit in `eRm` (using the Andersen conditional likelihood ratio test, **1973**)
+
+- multiple-groups version, invariance, DIF, DIFplot  
+
+ 
+
+#### Exercise: use eRm and the estimated parameters to make fit plots, compute item fit statistics and DIF plot
+
+ 
+
+### 3. LD Q3
+
+ 
+
+### 4. Dimensionalitet eller noget andet ?
+
+
+
+
+
+## Outtakes
+
+## 3) The generalized Martin-Löf test 
+
+Available for testing dimensionality, which is a different approach from the conventional method of conducting principal components analysis on the standardized residual matrix. Martin-Löf (Citation1970) proposed a test of unidimensionality for dichotomous Rasch models that is a likelihood ratio test for comparing the null hypothesis of unidimensionality against the alternative hypothesis of two dimensions.
+
+Christensen, Bjorner, Kreiner, and Petersen (Citation2002) generalized the test for (1) polytomous models and (2) an alternative hypothesis with more than two dimensions. 
+
+---
+
+The MLoef procedure splits the items into two subgroups using the median (default) or mean of the item raw scores, or the user can specify a grouping of two or three subgroups of items. 
+
+The command produces the log-likelihood value for each item grouping as well as for the overall model. The MLoef procedure also produces the likelihood ratio value, degrees of freedom and p value, which is the output that is examined when making a decision about the tenability of the unidimensionality assumption. 
+
+---
+
+The `MLoef` command is a large sample approximation (i.e., $\sim \chi^2$), but the `eRm` package also provides an exact test using the `NPtest` command. This command offers 12 different methods for testing unidimensionality with the default method checking for local dependence based on inter-item correlations. (Verguts2000) showed that the Martin-Löf test is a bit conservative unless used with a large sample but that it has appropriate power when the split of items is correct. (Christensen2007) showed that the Martin-Löf test works well but notes the requirement of a very large sample for the null distribution to follow the asymptotic $\chi^2$ distribution. In light of the available research on the Martin-Löf test and its generalization, the exact test (`NPtest`) may be an attractive option for some users.
+
+
+## Martin-Löf test
+
+The fit of these data to the Rasch model can be evaluated in numerous ways in the eRm package. The package supports tests such as Anderson’s likelihood ratio test, Wald-type tests, Martin-Löf test, various nonparametric tests, item and person fit indices, and graphical procedures. Testing for unidimensionality based on the fitted Rasch model using the Martin-Löf test resulted in
+
+```{r}
+MLoef(fit)
+```
+
+---
+
+There is no evidence that unidimensionality should not be tenable. 
+
+Other tests for unidimensionality are available through NPtest function. Then, if we find evidence of unidimensionality then an investigation of the item fit to the model could be the next step. 
+
+
+
+
+
+
+# CICC {visibility="uncounted"}
+
+## CICC {visibility="uncounted"}
+
+the distribution of the total score is
+
+$$
+P(R_{v}=r|\theta_v=\theta)=\frac{\exp(r\theta)\gamma_r(\boldsymbol{\beta})}{\prod_{i=1}^k\sum_{l=1}^{m_i}\exp(l\theta+\beta_{il})}
+$$
+
+where $\boldsymbol{\beta}$ is the vector of all item (easiness) parameters and
+
+$$
+\gamma_r(\boldsymbol{\beta})=\sum_{(x_i)}\exp\left(\sum_{i=1}^k\beta_{ix_i}\right)
+$$
+
+are so-called $\gamma$-functions (Andersen, 1995; formula 15.20).\nocite{Andersen1995}. In (\ref{gamma}) the summation is over the set $\{(x_i):\sum_{i=1}^kx_i=r\}$ of all response vectors with total score $r$ and the $\gamma$-functions can be calculated using the recursive formula
+
+$$
+\gamma_r(\boldsymbol{\beta})=\gamma_r^{(i)}(\boldsymbol{\beta})+\sum_{x=1}^{m_i}\exp(\beta_{ix})\gamma_{r-x}^{(i)},
+$$
+
+where $\gamma_{r-x}^{(i)}$ is the $\gamma$-function (\ref{gamma}) evaluated without item $i$. This means that the conditional probabilities of item scores given total scores can be written
+
+$$
+P(X_{vi}=x|R_{v}=r)=\frac{\exp(\beta_{ix})\gamma_{r-x}^{(i)}(\boldsymbol{\beta})}{\gamma_r(\boldsymbol{\beta})}
+$$
+
+Note that (\ref{condprob}) is independent of the value of $\theta_v$ due to the sufficiency of the total score in the Rasch model. Based on (\ref{condprob}) it is straight-forward to calculate the conditional expectation of item scores given total scores
+
+$$
+E_{ri}=E(X_{rv}|R_v=r)=
+\sum_{x=0}^{m_i} x\frac{\exp(\beta_{ix})\gamma_{r-x}^{(i)}(\boldsymbol{\beta})}{\gamma_r(\boldsymbol{\beta})}
+$$
+
+(Andersen, 1995; formula 15.22).
+
+
+
+
+# Appendix (Dichotomous example) {visibility="uncounted"}
+<!-- .slide: data-visibility="hidden" -->
+## Dichotomous example {visibility="uncounted"}
+
+We load data:
+
+```{r, echo=FALSE, include=FALSE, eval=FALSE}
+SCQOL <- read_csv("SCQOL.csv")
+SCQOL01 <- SCQOL %>% 
+  mutate(across(starts_with('SC0'),
+                ~ as.integer(. < 1)))
+write.csv(SCQOL01, "/home/ann-sophie/wip/2023/pmhealth/SCQOL01.csv")
+```
+
+```{r}
+library(readr)
+SCQOL <- read_csv("SCQOL01.csv")
+```
+
+---
+
+The top six rows of our data are
+
+```{r, eval=TRUE}
+head(SCQOL)
+```
+
+```{r, echo=FALSE, eval=FALSE}
+DT::datatable(head(SCQOL))
+```
+
+Many of the responses are 1's, which makes sense given that a large proportion of responses are not on the "Not at all" side of the response scale. Based on the agreeable response versus a disagreeable response, these data may be reflective of a person's level of QoL.
+
+---
+
+We create an object containing the items:
+
+```{r}
+items <- SCQOL %>%
+  select(starts_with('SC0'))
+```
+
+```{r, echo=FALSE}
+head(items) %>%
+  gt::gt() %>%
+  gt::tab_options(table.font.size = 13) %>%
+  gt::cols_width(SC01 ~ gt::px(50))
+```
+
+---
+
+<!--The scale is thought to measure a single underlying construct, or said another way, a unidimensional construct. The Rasch model was easily fit to these data and obtain the model results using the RM function (see below).-->
+The Rasch model is fit to data using the `RM` function from the `eRm` package:
+
+```{r}
+# Load data
+library(eRm)
+
+# Fit Rasch model
+fit <- RM(items)
+```
+
+---
+
+```{r, eval=FALSE}
+# Show results of RM estimation
+summary(fit)
+```
+
+```{r, echo=FALSE}
+DT::datatable(summary(fit))
+```
+
+---
+
+```{r}
+names(fit)
+```
+
+Item (Category) Difficulty Parameters (eta): 
+
+```{r}
+fit$etapar
+```
+
+Item Easiness Parameters (beta):
+
+```{r}
+fit$betapar
+```
+
+
+## The item characteristic curves (ICCs) {visibility="uncounted"}
+
+For dichotomous scales, the item characteristic curves for all items can be obtained using the `plotICC` command. The command plots the ICC for each item on a separate window so that each item can be inspected individually. 
+
+```{r, eval=FALSE, echo=FALSE}
+par(mfrow = c(3,3))
+plotICC(fit, ask = FALSE, mplot=FALSE)
+```
+
+<!-- @Karl: empirical ICC’s showing t↦P(yij=1|Sj=t) in stead of θ↦P(yij=1|θj=θ)?-->
+
+---
+
+All the ICCs can be plotted on the same window as well, using `plotjointICC`:
+
+```{r, echo=FALSE, eval=FALSE}
+par(mfrow=c(1,1))
+plotjointICC(fit)
+```
+
+<!-- The ICC plot highlights how the items are distributed and ordered the item legend based on the difficulty. The difficulty in jointly plotting all the ICCs is that some of the curves can be difficult to see (e.g., item 7). -->
+
+
+
+## Testing local dependence {visibility="uncounted"}
+
+Testing local dependence can be done by removing an item, fitting the Rasch model to the remaining items, splitting with respect to the removed item. The general method for testing local dependence in IRT is Yens Q3
+
+We use the sirt (supplementary IRT) package for this:
+
+```{r}
+library(sirt)
+```
+
+---
+
+We fit a Rasch model using `sirt` and save estimates $\hat\beta$ of item parameters and estimate person locations $\hat\theta$ (we use Warms weighted MLE)
+ 
+```{r}
+itms <- as.matrix(items)
+mod <- sirt::rasch.mml2(itms)
+beta <- mod$item$b
+mod.wle <- sirt::wle.rasch(dat = items , b = beta)
+eta <- mod.wle$theta
+```
+
+and now we can calculate Yen’s Q3 statistic
+
+```{r, eval=FALSE}
+q3 <- sirt::Q3(dat = items, theta = eta , b = beta)
+```
+
+---
+
+```{r}
+q3 <- sirt::Q3(dat = items, theta = eta , b = beta)
+```
+ 
+Conventional interpretation: correlations should be close to zero. A large value is evidence of a problem with the scale, but since we do not know the asymptotic distribution we have to rely on a rule of thumb to decide when to reject model fit. 
+An extensive simulation study indicated that "0.2 above the average" works well in many situations.
+
+# Exercise 4/4 {visibility="uncounted"}
+
+## Exercise 4/4 {visibility="uncounted"}
+
+4.1) Load dichotomised data `AKQOL01.csv` into R
+
+4.2) Fit a Rasch model using the `RM()` function
+
+4.3) Visualise item fit using, e.g., `CICCplot()` from the `RASCHplot` package or `plotICC()` and `plotjointICC()` from the `eRm` package.
+
+4.4) Calculate Yen’s Q3 statistic
+
+
+
+
+
+
+
+
+
+
+
+

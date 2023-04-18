@@ -1,0 +1,1065 @@
+---
+title: "R packages"
+subtitle: "Ann-Sophie Buchardt"
+date: "In collaboration with Karl Bang Christensen and Sidsel Normann Jensen"
+author: "2022-10-26"
+bibliography: /home/ann-sophie/wip/pa2122/karl/talk/packages.bib
+output: 
+  revealjs::revealjs_presentation:
+    css: styles.css
+    theme: black
+    highlight: zenburn
+    incremental: false
+    transition: none
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE, 
+                      message=FALSE,
+                      warning=FALSE,
+                      gganimate = list(nframes = 50),
+                      #tidy = TRUE, 
+                      #tidy.opts = list(blank = TRUE, arrow = TRUE), 
+                      highlight = TRUE,
+                      collapse = FALSE,
+                      cache.extra = R.version, autodep=TRUE,
+                      #fig.width=4, fig.height=3, 
+                      comment=NA)
+
+colpal <- c("#CFCFC2", "#95DA4C", "#3F8058", "#2980B9", "#F67400", "#7F8C8D", "#FDBC4B", "#3DAEE9", "#27AEAE", "#7A7C7D", "#7F8C8D", "#A43340", "#2980B9", "#F67400", "#DA4453", "#0099FF", "#F67400", "#8E44AD", "#27AE60", "#C45B00", "#CFCFC2", "#CFCFC2", "#27AE60", "#27AE60", "#2980B9", "#3DAEE9", "#DA4453", "#F44F4F", "#27AEAE", "#DA4453", "#DA4453")
+names(colpal) <- c("Normal", "Alert", "Annotation", "Attribute", "BaseN", "BuiltIn", "ControlFlow", "Char", "Constant", "Comment", "CommentVar", "Documentation", "DataType", "DecVal", "Error", "Extension", "Float", "Function", "Import", "Information", "Keyword", "Operator", "Other", "Preprocessor", "RegionMarker", "SpecialChar", "SpecialString", "String", "Variable", "VerbatimString", "Warning")
+
+
+library(RColorBrewer)
+#palette("Set 3")
+safe_colorblind_palette <- c("black","#88CCEE", "#CC6677", "#DDCC77", "#117733", 
+                             "#332288", "#AA4499", "#44AA99", "#999933", "#882255", 
+                             "#661100", "#6699CC", "#888888")
+palette(colpal)
+
+library(ggplot2)
+library(tidyverse)
+library(ggdark)
+library(asbu)
+library(gganimate)
+library(patchwork)
+library(DT)
+library(iarm)
+library(eRm)
+theme_set(theme_asbuzenburn() + theme(text = element_text(size = 20)))
+#theme_set(theme_asbudark() + theme(text = element_text(size = 20)))
+#new <- theme_set(theme_asbudark() + theme(text = element_text(size = 20)))
+#theme_set(new)
+
+set.seed(1)
+```
+
+
+## {}
+
+<!-- I have been working with Karl who has been working with Sidsel on one R package -- contrary to what the title suggests...-->
+
+```{r, eval=FALSE}
+#install.packages("devtools")
+#devtools::install_github("ERRTG/RASCHplot")
+```
+
+```{r}
+library(RASCHplot)
+```
+
+
+```{r, eval=FALSE}
+#devtools::install_github("ERRTG/RASCHplot", 
+#                         build_vignettes = TRUE)
+```
+
+# Introduction 
+
+<!-- {data-background="intro.png"} -->
+
+<!-- The overall theme is analysis of categorical data, such as answers to questions on a reading assessment or questionnaire responses -->
+
+<!-- Specifically we consider the Rasch model to model the probability of a specified response (e.g. right/wrong answer) as a function of person and item parameters. -->
+
+The overall theme is analysis of categorical data, such as <span style="color:#95DA4C">answers to questions</span> on a reading assessment or questionnaire responses.
+
+Specifically we consider the <span style="color:#95DA4C">Rasch model</span> to model the probability of a specified response as a function of person and item parameters.
+
+## Scale validation
+
+<!-- 25 May 1884 — Truman Lee Kelley was born. Kelly was a statistician and psychometrician with special interests in factor analysis, canonical correlation, multifactor theories of intelligence, and educational testing.-->
+
+T. L. Kelley (1927) defined validity as the extent to which an instrument <span style="color:#95DA4C">measures what it claims to measure</span>...
+
+<!-- Basically, when we have a scale, we are interested in validating said scale. -->
+
+<!-- So, what does validity mean? -->
+
+## The Rasch model 
+### - as a construct validity tool
+
+<!-- In the context of the Rasch model, we can talk about: --> 
+
+ - [ ] Overall fit
+ - [x] <span style="color:#95DA4C">Individual item fit</span>
+ - [ ] Local response dependence
+ - [ ] Dimensionality
+ - [ ] Targeting
+ - [ ] Reliability
+ - [x] <span style="color:#95DA4C">Differential item functioning (DIF)</span>
+
+<!-- Not a comprehensive list -->
+
+
+## {}
+
+$~$
+
+- <span style="color:#7F8C8D">Introduction</span>
+- Visualise individual item fit
+- Visualise differential item functioning (DIF)
+- Visualise sample distribution of fit statistics (individual item fit)
+
+
+<!-- The target of the package is visualisation of Rasch model fit. -->
+
+<!-- As you may have guessed, we are focusing on infividual item fit, and DIF -->
+
+<!-- Different implementations provide different fit statistics and even some shady p-values.
+We have implemented tools as visual supplements. -->
+
+<!-- Rasch analysis [24, 12, 6] is a modern approach based on item response theory (IRT) [28] that is used for the development and testing of patient-reported outcome (PRO) instruments. All IRT models possess certain desirable properties, and while some consider the Rasch model to be an overly simplified statistical model, its simplicity is exactly what gives it a special status among IRT models, representing a measurement model where the sum score of item responses contains all information about the underlying latent variable that the scale is intended to measure. A recent validation study of the SPADI using Rasch analysis identified strengths and limitations not previously observed using CTT methods [15]. This study concluded that the SPADI should be treated as two separate subscales and that, while the pain subscale fits the Rasch model well, the disability subscale does not fit the Rasch model and that clinicians should exercise caution when interpreting score changes on the disability subscale and attempt to compare their scores to age- and sex-stratified data. The Danish version of SPADI has been cross-culturally adapted and validated using CCT [4]. The purpose of this study is to validate the two subscales of the Danish translation of the SPADI using Rasch analysis, evaluate differential item functioning (DIF), and study how well the two subscales are targeted to patients with rotator cuff-related disorders. -->
+
+## Running example: SPADI
+### -- the shoulder pain and disability index
+
+$~$ 
+
+The SPADI contains 13 items that assess two domains;  
+
+$~$
+
+- a 5-item subscale that measures pain
+- and an 8-item subscale that measures disability. 
+
+
+
+## Pain scale 
+### -- How severe is your pain...
+
+| P1 $~$ At its worst?
+| P2 $~$ When lying on the involved side?
+| P3 $~$ Reaching for something on a high shelf?
+| P4 $~$ Touching the back of your neck?
+| P5 $~$ Pushing with the involved arm?
+
+## Disability scale 
+### -- How much difficulty do you have...
+
+| D1 $~$ Washing your hair?
+| D2 $~$ Washing your back?
+| D3 $~$ Putting on an undershirt or jumper?
+| D4 $~$ Putting on a shirt that buttons down the front?
+| D5 $~$ Putting on your pants?
+| D6 $~$ Placing an object on a high shelf?
+| D7 $~$ Carrying a heavy object of 4.5 kilograms?
+| D8 $~$ Removing something from your back pocket?
+
+
+
+## {}
+
+$~$
+
+- Introduction
+- <span style="color:#F67400">Visualise individual item fit</span>
+- Visualise differential item functioning (DIF)
+- Visualise sample distribution of fit statistics
+
+
+# Visualise individual item fit
+
+A Conditional Item Characteristic Curve (<span style="color: #95DA4C;">**CICC**</span>) is a curve describing the expected item mean as a function of the total score.
+
+It is possible to make an empirical CICC based on the observed data as both the empirical expected item score and the total scores can be calculated from the data. This empirical curve can then be compared to the model-based CICC to visualise item fit.
+
+## {}
+
+```{r, echo=FALSE}
+helpfile <- utils:::.getHelpFile(help(CICCplot))
+outfile <- tempfile(fileext = ".html")
+tools:::Rd2HTML(helpfile, out =outfile)
+rawHTML <- paste(readLines(outfile), collapse="\n")
+knitr::asis_output(htmltools::htmlPreserve(rawHTML))
+```      
+
+```{r, results='hide'}
+data(SPADI)
+```
+
+
+```{r, results='hide', echo=FALSE}
+dat <- droplevels(SPADI)
+dat <- dat[complete.cases(dat), ]
+itmsP <- dat[ ,4:8]
+itmsD <- dat[ ,9:16]
+
+test <- which(rowSums(itmsP) %in% c(0,max(itmsP)*ncol(itmsP)))
+if (!identical(integer(0), test)) {
+  itmsP <- itmsP[-test,]
+  datP <- dat[-test,]
+}
+
+test <- which(rowSums(itmsD) %in% c(0,max(itmsD)*ncol(itmsD)))
+if (!identical(integer(0), test)) {
+  itmsD <- itmsD[-test,]
+  datD <- dat[-test,]
+}
+```
+
+
+## Fit a Rasch model
+
+```{r, results='hide'}
+fitD <- eRm::PCM(itmsD)
+```
+
+```{r, results='hide'}
+pres.pcm <- eRm::person.parameter(fitD)
+```
+
+"Chi-square based itemfit and personfit statistics can be obtained by using `itemfit` and `personfit`."
+[@erm]
+
+```{r, results='hide'}
+eRm::itemfit(pres.pcm)
+```
+
+
+```{r, results='hide', echo=FALSE}
+ddd <- eRm::itemfit(pres.pcm) #out_infit(fit) #item_restscore(fit)
+dfdt <- round(data.frame(Outfit = ddd$i.outfitMSQ, V6 = c(0,0,0,0,0,0,1,0)), 2)
+```
+
+## Rasch model analysis
+
+```{r, eval=FALSE}
+eRm::itemfit(pres.pcm)$i.outfitMSQ
+```
+
+```{r, echo=FALSE}
+DT::datatable(dfdt, width = '30%',
+              options = list(pageLength = 10,
+                             #columnDefs = list(list(visible=FALSE, targets="padj.BH")),
+                             #autoWidth = TRUE,
+                             initComplete = JS("function(settings, json) {",
+                                               "$(this.api().table().header()).css({'background-color': '#3F3F3F', 'color': '#fff'});",
+                                               "}"),
+                             dom = 't',
+                             scrollX = TRUE,
+                             scrollCollapse = TRUE,
+                             columnDefs = list(list(targets = 2, visible = FALSE),
+                                               list(width = '10%', targets = c(0)),
+                                               list(width = '20%', targets = c(1)))
+                             ), 
+              #colnames = c('', 'Obs.', 'Exp.', 'Se', 'P-val.', 'Sig.')
+              ) %>%
+  formatStyle(0:1,  color = 'white', backgroundColor = '#3F3F3F')
+```
+
+
+## {}
+
+$~$
+
+
+$~$ 
+
+<center>
+$$
+Outfit_i = \frac{1}{N} \sum_{v = 1}^N \frac{(X_{vi} - E_{vi})^2}{V(X_{vi})}
+$$
+</center>
+
+$~$ 
+
+<!-- sum of squared residuals -->
+
+- Why should this be a good measurement for ordinal data? Normal data yes.  But ordinal data - maybe not?
+- This item fit statistic has no established null distribution.
+
+If the fit is perfect, the value is one. So a value close to one is good... But what is "close" to one? 
+
+
+## Danish SPADI data
+
+```{r, echo=FALSE}
+DT::datatable(dfdt, width = '30%', 
+            options = list(pageLength = 10,
+                           #columnDefs = list(list(visible=FALSE, targets="padj.BH")),
+                           #autoWidth = TRUE,
+                           initComplete = JS("function(settings, json) {",
+                                             "$(this.api().table().header()).css({'background-color': '#3F3F3F', 'color': '#fff'});",
+                                             "}"),
+                           dom = 't',
+                           scrollX = TRUE,
+                           scrollCollapse = TRUE,
+                             columnDefs = list(list(targets = 2, visible = FALSE),
+                                               list(width = '10%', targets = c(0)),
+                                               list(width = '20%', targets = c(1)))
+                           ), 
+            #colnames = c('', 'Obs.', 'Exp.', 'Se', 'P-val.', 'Sig.')
+            ) %>%
+  formatStyle("V6", target = 'row', color = "white",
+              backgroundColor = styleEqual(c(0,1), c("#3F3F3F", "#F44F4F"))
+    )
+```
+
+<!-- Nevertheless, D7 appears to be our least favorite. 
+But what is wrong with D7? 
+And what does it mean? 
+How wrong is it? ser værst ud. 
+--> 
+
+<!-- Maybe we can visualise this -->
+
+<!-- So for dichotomous items we can get a not very pretty figure in R -->
+
+<!-- We have implemented an, in my humble opinionm, better visualisation tool. -->
+
+<!-- der findes mange andre fit statistics, som nok har de samme problemer. -->
+
+<!-- Values greater than one indicate under-discrimination while values below one indicate over-discrimination both of which violate the Rasch model assumptions.-->
+
+
+## `CICCplot()`
+
+```{r, eval=FALSE, echo=FALSE}
+CICCplot(model = fitD,
+         which.item = "D7")
+```
+
+```{r}
+lower.groups <- c(0,5,19,23)
+```
+
+```{r, eval=FALSE}
+CICCplot(model = fitD,
+         which.item = "D7",
+         lower.groups)
+```
+
+---
+
+```{r, cache=FALSE, echo=FALSE, results='hide', fig.show='hide'}
+pp <- CICCplot(model = fitD,
+         which.item = "D7",
+         lower.groups,
+         point.size = 2)$`D7`+
+  ggplot2::scale_colour_manual(values = c("#CFCFC2", "#F44F4F")) 
+```
+
+```{r, echo=FALSE, eval=TRUE, cache=FALSE, fig.align='center', out.width="80%"}
+pp 
+```
+
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  gganimate = list(
+    nframes = 50#, rewind = TRUE
+  )
+)
+```
+
+```{r, echo=FALSE, eval=TRUE, cache=TRUE, fig.align = 'center', out.width="80%"}
+dat2 <- data.frame(x = na.omit(pp$data$Tot.val_grp), y = na.omit(pp$data$obs.val_grp))
+pp +
+  geom_line(data = dat2, aes(x, y), colour = "#F44F4F", linetype = 2) +
+  transition_reveal(dat2$x)
+```
+
+## Item Discrimination
+
+We observe a weaker relation between item D7 and the total score than expected.
+
+### Under-discrimination
+
+The increase in the observed score is steeper than the expected score.
+
+(As implied by the Outfit value $> 1$)
+
+
+## {}
+
+$~$
+
+- Introduction
+- Visualise individual item fit
+- <span style="color:#F67400">Visualise differential item functioning (DIF)</span>
+- Visualise sample distribution of fit statistics
+
+
+# Visualise differential item functioning (DIF)
+
+Differential item functioning (<span style="color: #95DA4C;">**DIF**</span>) indicates the lack of invariance across sub groups. 
+
+In other words, DIF occurs when sample subgroups respond differently to an individual item despite equal level of ability. 
+
+Items with DIF make a scale unsuitable for measurement and comparisons across groups.
+
+<!-- DIF is essencially the lack of invariance accross subgroups, so maybe men and women systematically answer differently to some specific question -->
+
+<!-- These systematic differences in the responses can be problematic as they indicate that the questionnaire is not fair across the complete sample and comparisons across subgroups can be problematic. For example, in an educational test with DIF items may disadvantage one subgroup against the other. -->
+   
+
+## English and Danish SPADI data
+
+<!--"We validated the Danish version of the SPADI and found results very similar to those Jerosch-Herold et al. found for the English version." [@spadiDK]-->
+
+> "For the pain subscale, Jerosch-Herold et al. found <span style="color: #95DA4C;">DIF by age for P1</span> 'pain at worst' [...] We replicated the finding." [@spadiDK]
+
+<!-- Let's see if we can visualise this -->
+
+
+
+```{r, eval=FALSE, echo=FALSE, results='hide'}
+df <- datP %>% 
+  rowwise() %>% 
+  mutate(TotalScore = sum(c_across(P1:P5))) %>%
+  mutate(TotalScoreFact = as.factor(TotalScore)) %>%
+  mutate(across(1:2, as.factor))
+
+library(car)
+fitP1 <- glm(P1 ~ over60 + TotalScoreFact, data = df)
+ava <- Anova(fitP1, test.statistic = "Wald")
+pvals <- data.frame(P1 = ava[-2, "Pr(>Chisq)"])
+
+fitP2 <- glm(P2 ~ over60 + TotalScoreFact, data = df)
+ava <- Anova(fitP2, test.statistic = "Wald")
+pvals$P2 <- ava[-2, "Pr(>Chisq)"]
+
+fitP3 <- glm(P3 ~ over60 + TotalScoreFact, data = df)
+ava <- Anova(fitP3, test.statistic = "Wald")
+pvals$P3 <- ava[-2, "Pr(>Chisq)"]
+
+fitP4 <- glm(P4 ~ over60 + TotalScoreFact, data = df)
+ava <- Anova(fitP4, test.statistic = "Wald")
+pvals$P4 <- ava[-2, "Pr(>Chisq)"]
+
+fitP5 <- glm(P5 ~ over60 + TotalScoreFact, data = df)
+ava <- Anova(fitP5, test.statistic = "Wald")
+pvals$P5 <- ava[-2, "Pr(>Chisq)"]
+
+colnames(pvals)[which(pvals == min(pvals), arr.ind = TRUE)[2]]
+```
+
+---
+
+<!-- Well, we can, because we have implemented a function, and it has a help page :) -->
+
+```{r, echo=FALSE}
+helpfile <- utils:::.getHelpFile(help(DIFplot))
+outfile <- tempfile(fileext = ".html")
+tools:::Rd2HTML(helpfile, out =outfile)
+rawHTML <- paste(readLines(outfile), collapse="\n")
+knitr::asis_output(htmltools::htmlPreserve(rawHTML))
+```   
+
+---
+
+```{r, echo=TRUE, results='hide'}
+fitP <- eRm::PCM(itmsP)
+```
+
+```{r}
+svs <- list(over60 = datP[, "over60"])
+```
+
+```{r, eval=FALSE, echo=FALSE}
+DIFplot(model = fitP,
+        strat.vars = svs,
+        which.item = 1)
+```
+
+```{r}
+lgs <- list(over60 = list("0" = c(0,3,13,23), 
+                          "1" = c(0,9,15,20)))
+```
+
+
+```{r, eval=FALSE}
+DIFplot(model = fitP,
+        strat.vars = svs,
+        which.item = 1,
+        lower.groups = lgs)
+```
+
+---
+
+```{r, cache=TRUE, echo=FALSE, results='hide', fig.show='hide'}
+cols <- c("#CFCFC2", "#95DA4C", "#3F8058")
+names(cols) <- c("Expected", levels(as.factor(svs$over60)))
+
+dd <- DIFplot(model = fitP,
+        strat.vars = svs,
+        which.item = 1,
+        lower.groups = lgs,
+        point.size = 2)[[1]]$over60 +
+  ggplot2::scale_colour_manual(values = cols) 
+```
+
+```{r, echo=FALSE, eval=TRUE, cache=TRUE, fig.align='center', out.width="80%"}
+dd
+```
+
+<!-- Patients under 60 are observed to score higher on pain -- they are not as tolerant / more whiney --> 
+
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  gganimate = list(
+    nframes = 50#, rewind = TRUE
+  )
+)
+```
+
+```{r, echo=FALSE, eval=TRUE, cache=TRUE, fig.align='center', out.width="80%"}
+dat3 <- data.frame(x = na.omit(dd$data$Tot.val_grp),
+                   y = na.omit(dd$data$obs.val_grp), 
+                   z = as.factor(na.omit(dd$data$strat.var)))
+dd +
+  #ggplot2::scale_colour_manual(values = c("#CFCFC2", "#F44F4F")) +
+  geom_line(data = dat3, aes(x, y, colour = as.factor(z)), linetype = 2) +
+  transition_reveal(dat3$x)
+```
+
+
+## {}
+
+$~$
+
+- Introduction
+- Visualise individual item fit
+- Visualise differential item functioning (DIF)
+- <span style="color:#F67400">Visualise sample distribution of fit statistics</span>
+
+# Visualise sample distribution of fit statistics
+
+<!-- "Initial analysis of the 5-item pain subscale revealed overall good fit to the Rasch Model. The total item-trait Chi-square statistic was not significant (see Table 1, analysis 2), and response thresholds for all five items were ordered. Pain at worst (P2) showed some misfit (fit residual + 2.74)." [@spadiUK]-->
+
+
+> "Three items had <span style="color: #95DA4C;">fit residuals</span> outside the ± 2.5 threshold [...]" [@spadiUK]
+
+<!-- Derefter siger du "det er sådan praksis er, men der er ikke meget evidens for 'the ± 2.5 threshold', så viser du tegningen med minimal/maximal FitResid (den første af dem) og man kan se at 'the ± 2.5 threshold' ikke helt holder. -->
+<!-- jo længere væk fra 1 jo dårligere er item, men hvor langt væk er for langt væk -->
+
+
+<!--Slide: Vis SPADI Fit Resid fra artikel
+Bonger D1 ud i det danske data?
+Hvad hvis vi simulerede 1014 personer?-->
+
+
+
+```{r, message=FALSE, echo=FALSE, results='hide', cache=TRUE}
+#fits <- RASCHfits(method.item = "PCML", method.person = "WML", dat = itmsD)
+fits <- RASCHfits(method.item = "CML", method.person = "MLE", dat = itmsD)
+beta <- fits$beta
+theta <- fits$theta
+
+fitres <- RASCHstats(beta, theta, dat = itmsD) 
+```
+
+```{r, echo=FALSE}
+outfits <- data.frame(x = fitres$Outfit, y = rep(0, length(fitres$Outfit)))
+infits <- data.frame(x = fitres$Infit, y = rep(0, length(fitres$Infit)))
+fitresids <- data.frame(x = fitres$FitResid, y = rep(0, length(fitres$FitResid)))
+my_colors <- colpal[c("Documentation", "String", "Normal")]
+names(my_colors) <- c("2.5%", "5%", "other")
+```
+
+
+## Danish SPADI data
+
+```{r, dfdt2, echo=FALSE}
+dfdt2 <- round(data.frame(FitResid = fitres$FitResid, 
+                          Outfit = fitres$Outfit,
+                          V6 = c(1,0,1,0,0,0,1,0)), 2)
+
+DT::datatable(dfdt2, width = '30%', 
+            options = list(pageLength = 10,
+                           #columnDefs = list(list(visible=FALSE, targets="padj.BH")),
+                           #autoWidth = TRUE,
+                           initComplete = JS("function(settings, json) {",
+                                             "$(this.api().table().header()).css({'background-color': '#3F3F3F', 'color': '#fff'});",
+                                             "}"),
+                           dom = 't',
+                           scrollCollapse = TRUE,
+                           #autoWidth = TRUE,
+                             columnDefs = list(list(targets = c(2,3), visible = FALSE),
+                                               list(width = '10%', targets = c(0)),
+                                               list(width = '20%', targets = c(1)))
+                           ), 
+            #colnames = c('', 'Obs.', 'Exp.', 'Se', 'P-val.', 'Sig.')
+            ) %>%
+  formatStyle("V6", target = 'row', color = "white",
+              backgroundColor = styleEqual(c(0,1), c("#3F3F3F", "#F44F4F"))
+    )
+```
+
+## {}
+
+$~$ 
+
+### How likely is 4.5?
+
+
+## Implementation
+
+Starting point: estimated item and person parameters.
+
+1. Compute conditional probabilities for item responses;
+2. Generate item responses;
+3. Estimate item and person parameters;
+4. Compute <span style="color: #95DA4C;">fit statistics of interest</span>.
+
+$\mathbf{\circlearrowright}$ Repeat to obtain sampling distribution for (extreme) statistic.
+
+---
+
+```{r, statobj, message=FALSE, echo=FALSE, results='hide', cache=TRUE}
+statobj <- simRASCHstats(beta, theta, 
+                         method.item = "CML", 
+                         method.person = "WML", 
+                         B = 100,
+                         model = "RMP")
+```
+
+```{r, echo=FALSE}
+fitresids <- data.frame(x = fitres$FitResid[7], y = rep(0, length(fitres$FitResid))[7])
+```
+
+```{r, echo=FALSE, cache=TRUE, fig.show="hold", out.width="80%"}
+p5 <- plot(x = statobj,
+     type = "FitResid", extreme = "min",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) 
+
+p6 <- plot(x = statobj,
+     type = "FitResid", extreme = "max",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7)
+
+(p5 + 
+  plot_layout(guides = "collect") &
+  theme(plot.title = element_text(colour  = "white", size = 18), legend.position = "bottom",
+        legend.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        legend.key = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        plot.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F"))) +
+  (p6 +
+  theme(legend.position="none"))
+```
+
+
+```{r, eval=FALSE, echo=FALSE, cache=TRUE, fig.show="hold", out.width="80%"}
+p5 <- plot(x = statobj,
+     type = "FitResid", extreme = "min",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) +
+  geom_point(data = fitresids, 
+             colour = "white", size = 1.5) + 
+  geom_text(data = fitresids, aes(label = 1:nrow(fitresids)), vjust = -2) 
+
+p6 <- plot(x = statobj,
+     type = "FitResid", extreme = "max",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) +
+  geom_point(data = fitresids, 
+             colour = "white", size = 1.5) + 
+  geom_text(data = fitresids, aes(label = 1:nrow(fitresids)), vjust = -2) 
+
+(p5 + 
+  plot_layout(guides = "collect") &
+  theme(plot.title = element_text(colour  = "white", size = 18), legend.position = "bottom",
+        legend.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        legend.key = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        plot.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F"))) +
+  (p6 +
+  theme(legend.position="none"))
+```
+
+## Danish SPADI data
+
+```{r, echo=FALSE}
+DT::datatable(dfdt2, width = '50%', 
+            options = list(pageLength = 10,
+                           #columnDefs = list(list(visible=FALSE, targets="padj.BH")),
+                           #autoWidth = TRUE,
+                           initComplete = JS("function(settings, json) {",
+                                             "$(this.api().table().header()).css({'background-color': '#3F3F3F', 'color': '#fff'});",
+                                             "}"),
+                           dom = 't',
+                           scrollX = TRUE,
+                           scrollCollapse = TRUE,
+                             columnDefs = list(list(targets = 3, visible = FALSE),
+                                               list(width = '10%', targets = c(0)),
+                                               list(width = '20%', targets = c(1)),
+                                               list(width = '20%', targets = c(2)))
+                           ), 
+            #colnames = c('', 'Obs.', 'Exp.', 'Se', 'P-val.', 'Sig.')
+            ) %>%
+  formatStyle("V6", target = 'row', color = "white",
+              backgroundColor = styleEqual(c(0,1), c("#3F3F3F", "#F44F4F"))
+    )
+```
+
+---
+
+```{r, echo=FALSE, cache=TRUE, fig.show="hold", out.width="80%"}
+p1 <- plot(x = statobj,
+     type = "Outfit", extreme = "min",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) 
+
+p2 <- plot(x = statobj,
+     type = "Outfit", extreme = "max",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) 
+
+(p1 + 
+  plot_layout(guides = "collect") &
+  theme(plot.title = element_text(colour  = "white", size = 18), legend.position = "bottom",
+        legend.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        legend.key = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        plot.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F"))) +
+  (p2 +
+  theme(legend.position="none"))
+```
+
+## Using our R package
+
+```{r, eval=FALSE, echo=TRUE}
+statobj <- simRASCHstats(beta, theta, 
+                         method.item = "CML", 
+                         method.person = "WML", 
+                         B = 100,
+                         model = "RMP")
+```
+
+```{r, eval=FALSE}
+plot(x = statobj, type = "Outfit", extreme = "min") 
+```
+
+```{r, eval=FALSE}
+plot(x = statobj, type = "Outfit", extreme = "max") 
+```
+
+
+
+
+
+
+## Using our shiny apps
+
+Run app for dichotomous items
+
+```{r, eval=FALSE}
+RASCHplot::app("RMDitemfit")
+```
+
+Run app for polytomous items
+
+```{r, eval=FALSE}
+RASCHplot::app("RMPitemfit")
+```
+
+---
+
+![](/home/ann-sophie/wip/pa2122/karl/inoutshiny/interface.png)
+
+---
+
+![](/home/ann-sophie/wip/pa2122/karl/inoutshiny/inputtab.png)
+
+---
+
+![](/home/ann-sophie/wip/pa2122/karl/inoutshiny/outfittab.png)
+
+
+## Thank you
+
+## References
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r, eval=FALSE, echo=FALSE}
+dfdt3 <- round(data.frame(Outfit = ddd$i.outfitMSQ, V6 = c(0,0,1,0,0,0,1,0)), 4)
+
+DT::datatable(dfdt3, width = '55%', 
+            options = list(pageLength = 10,
+                           #columnDefs = list(list(visible=FALSE, targets="padj.BH")),
+                           #autoWidth = TRUE,
+                           initComplete = JS("function(settings, json) {",
+                                             "$(this.api().table().header()).css({'background-color': '#3F3F3F', 'color': '#fff'});",
+                                             "}"),
+                           dom = 't',
+                           scrollCollapse = TRUE,
+                             columnDefs = list(list(targets = 2, visible = FALSE))
+                           ), 
+            #colnames = c('', 'Obs.', 'Exp.', 'Se', 'P-val.', 'Sig.')
+            ) %>%
+  formatStyle("V6", target = 'row', color = "white",
+              backgroundColor = styleEqual(c(0,1), c("#3F3F3F", "#F44F4F"))
+    )
+```
+
+
+
+
+```{r, eval=FALSE, echo=FALSE}
+mi <- apply(itmsD, 2, max, na.rm = TRUE)
+
+# Compute item outfit (and infit)
+#outinfobj <- iarm::out_infit(fitD)
+#outfit <- outinfobj$Outfit
+#infit <- outinfobj$Infit
+outinfobj <- eRm::itemfit(pres.pcm)
+outfit <- outinfobj$i.outfitMSQ
+infit <- outinfobj$i.infitMSQ
+
+# Get item locations
+betavec <- - fitD$betapar 
+rows <- do.call(c, lapply(1:ncol(itmsD), function(i) 1:mi[i]))
+cols <- do.call(c, lapply(1:ncol(itmsD), function(i) rep(i, mi[i])))
+beta <- matrix(NA, nrow = max(itmsD), ncol = ncol(itmsD))
+for (i in 1:length(betavec)) {
+  beta[rows[i], cols[i]] <- betavec[i]
+}
+
+theta <- person.parameter(fitD)$thetapar$NAgroup1
+
+path <- ("/home/ann-sophie/wip/pa2122/karl/inoutshiny/testdata/")
+write.csv(data.frame(beta = beta), paste0(path,'spadiDermbeta.csv'))
+write.csv(data.frame(theta = theta), paste0(path,'spadiDermtheta.csv'))
+write.csv(data.frame(outfit = outfit), paste0(path,'spadiDermoutfit.csv'))
+write.csv(data.frame(infit = infit), paste0(path,'spadiDerminfit.csv'))
+
+
+
+# Get person paramters
+fits <- RASCHfits(method.item = "CML", method.person = "MLE", dat = itmsD)
+beta <- fits$beta
+theta <- fits$theta
+
+fitres <- RASCHstats(beta, theta, dat = itmsD) 
+
+path <- ("/home/ann-sophie/wip/pa2122/karl/inoutshiny/testdata/")
+write.csv(data.frame(beta = beta), paste0(path,'spadiDbeta.csv'))
+write.csv(data.frame(theta = theta), paste0(path,'spadiDtheta.csv'))
+write.csv(data.frame(outfit = fitres$Outfit), paste0(path,'spadiDoutfit.csv'))
+write.csv(data.frame(infit = fitres$Infit), paste0(path,'spadiDinfit.csv'))
+write.csv(data.frame(fitresid = fitres$FitResid), paste0(path,'spadiDfitresid.csv'))
+```
+
+```{r, eval=FALSE, message=FALSE, echo=FALSE, results='hide', cache=TRUE}
+path <- "/home/ann-sophie/wip/pa2122/karl/inoutshiny/testdata/"
+theta <- read.csv(paste0(path, "spadiDermtheta.csv"))[,-1]
+beta <- read.csv(paste0(path, "spadiDermbeta.csv"))[,-1]
+outfit <- read.csv(paste0(path, "spadiDfitresid.csv"))[,-1]
+
+range(outfit)
+```
+
+
+
+
+
+
+
+
+
+
+
+```{r, eval=FALSE, echo=FALSE, cache=TRUE, fig.show="hold", out.width="80%"}
+p1 <- plot(x = statobj,
+     type = "Outfit", extreme = "min",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) +
+  geom_point(data = outfits, 
+             colour = "white", size = 1.5) + 
+  geom_text(data = outfits, aes(label = 1:nrow(outfits)), vjust = -2) 
+
+p2 <- plot(x = statobj,
+     type = "Outfit", extreme = "max",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) +
+  geom_point(data = outfits, 
+             colour = "white", size = 1.5) + 
+  geom_text(data = outfits, aes(label = 1:nrow(outfits)), vjust = -2) 
+
+(p1 + 
+  plot_layout(guides = "collect") &
+  theme(plot.title = element_text(colour  = "white", size = 18), legend.position = "bottom",
+        legend.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        legend.key = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        plot.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F"))) +
+  (p2 +
+  theme(legend.position="none"))
+```
+
+
+```{r, eval=FALSE, echo=FALSE, cache=TRUE, fig.show="hold", out.width="80%"}
+p3 <- plot(x = statobj,
+     type = "Infit", extreme = "min",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7)
+
+p4 <- plot(x = statobj,
+     type = "Infit", extreme = "max",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7)
+
+(p3 + 
+  plot_layout(guides = "collect") &
+  theme(plot.title = element_text(colour  = "white", size = 18), legend.position = "bottom",
+        legend.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        legend.key = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        plot.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F"))) +
+  (p4 +
+  theme(legend.position="none"))
+```
+
+
+```{r, eval=FALSE, echo=FALSE, cache=TRUE, fig.show="hold", out.width="80%"}
+p3 <- plot(x = statobj,
+     type = "Infit", extreme = "min",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) +
+  geom_point(data = infits, 
+             colour = "white", size = 1.5) + 
+  geom_text(data = infits, aes(label = 1:nrow(infits)), vjust = -2) 
+
+p4 <- plot(x = statobj,
+     type = "Infit", extreme = "max",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) +
+  geom_point(data = infits, 
+             colour = "white", size = 1.5) + 
+  geom_text(data = infits, aes(label = 1:nrow(infits)), vjust = -2) 
+
+(p3 + 
+  plot_layout(guides = "collect") &
+  theme(plot.title = element_text(colour  = "white", size = 18), legend.position = "bottom",
+        legend.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        legend.key = element_rect(fill = "#3F3F3F", colour = "#3F3F3F" ),
+        plot.background = element_rect(fill = "#3F3F3F", colour = "#3F3F3F"))) +
+  (p4 +
+  theme(legend.position="none"))
+```
+
+
+
+
+
+
+
+
+```{r, echo=FALSE, eval=FALSE}
+probs <- c(0.025, 0.05)
+breaks <- paste0(probs * 100, "%")
+labels <- c(breaks, "other")
+
+ggplot(dat = outfits, aes(x = x, y = y)) +
+  geom_point() + 
+  geom_line(dat = p1$data, aes(x, y)) + 
+  geom_ribbon(dat = p1$data, aes(ymin = 0, ymax = y, 
+                                 fill = quant, group = group), 
+                         color = "white", alpha = .7) +
+    ggplot2::scale_fill_manual(values = my_colors, breaks = breaks, labels = breaks) +
+  theme_set(theme_asbuzenburn() + theme(text = element_text(size = 20))) +
+  transition_states(outfits$x)
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+plot(x = statobj,
+     type = "Outfit", extreme = "max",
+     colours = my_colors,
+     title = "",
+     col.outline = "white",
+     alpha.ribbon = .7) +
+  geom_point(data = outfits, aes(group = 1:nrow(outfits)),
+             colour = "white", size = 1.5)+
+  theme_set(theme_asbuzenburn() + theme(text = element_text(size = 20))) +
+  transition_reveal(x) + 
+  geom_text(data = outfits, aes(label = 1:nrow(outfits)), vjust = -2) 
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+my_colors <- colpal[c("Normal", "Normal", "Normal")]
+names(my_colors) <- c("2.5%", "5%", "other")
+
+p1 <- plot(x = statobj,
+           type = "Outfit", extreme = "min",
+           colours = my_colors, 
+           title = "",
+           col.outline = "white",
+           alpha.ribbon = .7) +
+  theme_set(theme_asbuzenburn() + theme(text = element_text(size = 20)))
+
+p1 +
+  geom_point(data = outfits, aes(group = 1:nrow(outfits)),
+             colour = "white", size = 1.5)+
+  transition_reveal(x) + 
+  geom_ribbon(dat = p1$data, aes(ymin = 0, ymax = y, 
+                                 fill = quant, group = group), 
+                         color = "white", alpha = .7)
+```
