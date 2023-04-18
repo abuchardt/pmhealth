@@ -6,7 +6,8 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-contrib/reveal-auto-agenda-0.0.1/reveal-auto-agenda.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.335">
 
   <meta name="author" content="Ann-Sophie Buchardt">
@@ -116,6 +117,7 @@
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-pointer/pointer.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
@@ -429,9 +431,39 @@ Ann-Sophie Buchardt
 
 </section>
 <section>
-<section id="introduction" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>Introduction</h1>
-
+<div class="agenda">
+<ul>
+<li><div class="agenda-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 </section>
 <section id="the-rasch-model" class="slide level2">
 <h2>The Rasch model</h2>
@@ -551,9 +583,39 @@ P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp
 </div>
 </section></section>
 <section>
-<section id="estimate-the-rasch-model" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>1. Estimate the Rasch model</h1>
-
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 </section>
 <section id="estimate-the-rasch-model-1" class="slide level2">
 <h2>1. Estimate the Rasch model</h2>
@@ -1037,9 +1099,39 @@ SCQoLQ9 -1.1402670  -2.9289613  -0.6189519   0.1271121</code></pre>
 
 <img data-src="index_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section></section>
 <section>
-<section id="exercise-13" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>Exercise 1/3</h1>
-
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 </section>
 <section id="objective-1" class="slide level2">
 <h2>OBJECTIVE</h2>
@@ -1059,14 +1151,75 @@ SCQoLQ9 -1.1402670  -2.9289613  -0.6189519   0.1271121</code></pre>
 <p>1.5) Visualise the relationship between ability and probability of answering an item correctly using the <code>plotICC</code> function.</p>
 <p>1.6) Experiment with the <code>WrigthMap</code> package.</p>
 </section></section>
-<section id="fika" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>FIKA</h1>
-
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 </section>
 
 <section>
-<section id="test-the-rasch-model" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>2. Test the Rasch model</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 <!--# Model diagnostics-->
 </section>
 <section id="test-the-rasch-model-1" class="slide level2">
@@ -1455,9 +1608,39 @@ $SCQoLQ5$Sex</code></pre>
 </div>
 </section></section>
 <section>
-<section id="exercise-23" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>Exercise 2/3</h1>
-
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 </section>
 <section id="exercise-23-1" class="slide level2">
 <h2>Exercise 2/3</h2>
@@ -1467,9 +1650,39 @@ $SCQoLQ5$Sex</code></pre>
 <p>2.4) DIF</p>
 </section></section>
 <section>
-<section id="testing-local-dependence" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>3. Testing local dependence</h1>
-
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 </section>
 <section id="testing-local-dependence-1" class="slide level2">
 <h2>3. Testing local dependence</h2>
@@ -1520,9 +1733,39 @@ $SCQoLQ5$Sex</code></pre>
 <p>Conventional interpretation: correlations should be close to zero. A large value is evidence of a problem with the scale, but since we do not know the asymptotic distribution we have to rely on a rule of thumb to decide when to reject model fit. An extensive simulation study indicated that “0.2 above the average” works well in many situations.</p>
 </section></section>
 <section>
-<section id="exercise-33" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>Exercise 3/3</h1>
-
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 </section>
 <section id="exercise-33-1" class="slide level2">
 <h2>Exercise 3/3</h2>
@@ -1532,9 +1775,39 @@ $SCQoLQ5$Sex</code></pre>
 <p>3.4)</p>
 </section></section>
 <section>
-<section id="references" class="title-slide slide level1 center">
+<section class="title-slide slide level1 agenda-slide center">
 <h1>References</h1>
-
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
 </section>
 <section id="references-1" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -1564,6 +1837,7 @@ Linacre, J. M. 2022. <span>“<span class="nocase">R Statistics: survey and revi
   <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
   <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -1586,6 +1860,7 @@ Linacre, J. M. 2022. <span>“<span class="nocase">R Statistics: survey and revi
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'pointer': {"key":"q","color":"#ff4500","pointerSize":20,"alwaysVisible":false},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1756,7 +2031,7 @@ Linacre, J. M. 2022. <span>“<span class="nocase">R Statistics: survey and revi
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealPointer, QuartoSupport,
 
           RevealMath,
           RevealNotes,

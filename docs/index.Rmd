@@ -4,6 +4,13 @@ author: "Ann-Sophie Buchardt"
 format: 
   revealjs:
     navigation-mode: vertical
+    pointer:
+      pointerSize: 20
+      color: '#ff4500'
+revealjs-plugins:
+  - pointer
+filters:
+  - reveal-auto-agenda
 editor: visual
 bibliography: references.bib
 ---
