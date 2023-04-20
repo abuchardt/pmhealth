@@ -31,7 +31,7 @@ The Rasch model for polytomous items[^1] [@Andersen1977]:
 
 [^1]: Frequently referred to as the Rating Scale Model (RSM) or the Partial Credit Model (PCM)
 
-For person \$v \$ the probability of response $x$ on item $i$ is
+For person $v$ the probability of response $x$ on item $i$ is
 
 $$
 P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp(l\theta-\beta_{il})}
@@ -358,7 +358,7 @@ plotjointICC(fit)
 
 <!-- The ICC plot highlights how the items are distributed and ordered the item legend based on the difficulty. The difficulty in jointly plotting all the ICCs is that some of the curves can be difficult to see (e.g., item 7). -->
 
-## The item [category]{style="color: OrangeRed;"} characteristic curves
+## The item [category]{style="color: OrangeRed;"} characteristic curves (IcCCs)
 
 For polytomnous scales, the `plotICC` function plots ICCs for each category within all items.
 
@@ -369,13 +369,22 @@ plotICC(fit, ask = FALSE, mplot=FALSE, legpos = FALSE)
 
 <!--This plot shows the item characteristic curve for the item. The x-axis show the ability continuum the y-axis the response probability. The continuous line describes the probability to respond correctly to the problem given a level of ability. The difficulty of the item is the where the probability of a correct response equals 0.5. The option empICC="raw" also plots the relative frequencies of positive responses for each rawscore group at the position of the corresponding ability level. The blue dotted lines represent the 95% confidence level for the relative frequencies and are shown if options are provided if empCI = is specified.-->
 
-## The item [category]{style="color: OrangeRed;"} characteristic curves
+## The I[c]{style="color: OrangeRed;"}CCs
 
-<mark style="background-color: #FFFF00">\@ Karl Noget at bemærke?</mark>
+<mark style="background-color: #FFFF00">\@ Karl Noget at bemærke? Item 5?</mark>
 
 ```{r, echo=FALSE}
 par(mfrow = c(3,3))
 plotICC(fit, ask = FALSE, mplot=FALSE, legpos = FALSE)
+```
+
+## The I[c]{style="color: OrangeRed;"}CCs
+
+<mark style="background-color: #FFFF00">\@ Karl Noget at bemærke?</mark>
+
+```{r, echo=FALSE}
+par(mfrow = c(1,1))
+plotICC(fit, item.subset = 5, ask = FALSE, mplot=FALSE, legpos = FALSE)
 ```
 
 # Exercise 1/3
@@ -876,6 +885,7 @@ q3 <- sirt::Q3(dat = items, theta = theta , b = beta)
 
 Conventional interpretation: correlations should be close to zero. A large value is evidence of a problem with the scale, but since we do not know the asymptotic distribution we have to rely on a rule of thumb to decide when to reject model fit. An extensive simulation study indicated that "0.2 above the average" works well in many situations.
 
+
 # Exercise 3/3
 
 ## Exercise 3/3
@@ -887,6 +897,16 @@ Conventional interpretation: correlations should be close to zero. A large value
 3.3)
 
 3.4)
+
+
+# Reporting
+
+## Reporting
+
+```{r}
+library(RISEkbmRasch) # devtools::install_github("pgmj/RISEkbmRasch", dependencies = TRUE)
+```
+
 
 # References
 
