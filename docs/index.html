@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="index_files/libs/quarto-contrib/reveal-auto-agenda-0.0.1/reveal-auto-agenda.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.335">
+  <meta name="generator" content="quarto-1.2.475">
 
   <meta name="author" content="Ann-Sophie Buchardt">
   <title>Rasch in R</title>
@@ -403,16 +403,6 @@
       margin-right: 0; 
     }
   </style>
-  
-  <script src="index_files/libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
-  <link href="index_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-  <script src="index_files/libs/datatables-binding-0.26/datatables.js"></script>
-  <script src="index_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="index_files/libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
-  <link href="index_files/libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
-  <script src="index_files/libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
-  <link href="index_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
-  <script src="index_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -460,25 +450,23 @@ Ann-Sophie Buchardt
 <p>Exercise 3/3</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Reporting</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>References</p>
 </div></li>
 </ul>
 </div>
 </section>
 <section id="the-rasch-model" class="slide level2">
-<h2>The Rasch model</h2>
-<p>The Rasch model for polytomous items<sup>1</sup> <span class="citation" data-cites="Andersen1977">(<a href="#/references-1" role="doc-biblioref" onclick="">Erling B. Andersen 1977</a>)</span>:</p>
-<p>For person <span class="math inline">\(v\)</span> the probability of response <span class="math inline">\(x\)</span> on item <span class="math inline">\(i\)</span> is</p>
+<h2>The Rasch model…</h2>
+<p>… for polytomous items<sup>1</sup> <span class="citation" data-cites="Andersen1977">(<a href="#/references-1" role="doc-biblioref" onclick="">Erling B. Andersen 1977</a>)</span>:</p>
+<p>For person <span class="math inline">\(v\)</span> the conditional probability that person <span class="math inline">\(v = 1,\ldots,n\)</span> with <span style="color: OrangeRed;">ability <span class="math inline">\(\theta_v\)</span></span> respond with <span style="color: OrangeRed;">score <span class="math inline">\(x\)</span></span> on item <span class="math inline">\(i = 1,\ldots, k\)</span> with <span style="color: OrangeRed;">difficulty <span class="math inline">\(\beta_{ix}\)</span></span> is:</p>
 <p><span class="math display">\[
 P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp(l\theta-\beta_{il})}
 \]</span></p>
 <p>where each item <span class="math inline">\(i\)</span> has a certain number of response categories, denoted by <span class="math inline">\(m_i\)</span>.</p>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Frequently referred to as the Rating Scale Model (RSM) or the Partial Credit Model (PCM)</p></li></ol></aside></section>
-<section id="the-rasch-model-1" class="slide level2">
-<h2>The Rasch model</h2>
-<p>The Rasch model for polytomous items<sup>1</sup> <span class="citation" data-cites="Andersen1977">(<a href="#/references-1" role="doc-biblioref" onclick="">Erling B. Andersen 1977</a>)</span>:</p>
-<p>Model for the conditional probability that person <span class="math inline">\(v = 1,\ldots,n\)</span> with <span style="color: OrangeRed;">ability <span class="math inline">\(\theta_v\)</span></span> would respond with category score <span class="math inline">\(x\)</span> on item <span class="math inline">\(i = 1,\ldots, k\)</span> with <span style="color: OrangeRed;">difficulty <span class="math inline">\(\beta_{ix}\)</span></span>.</p>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Frequently referred to as the Rating Scale Model (RSM) or the Partial Credit Model (PCM)</p></li></ol></aside></section>
 <section id="agenda" class="slide level2">
 <h2>Agenda</h2>
 <p>We demonstrate the functionality with an example using data from the The Skin Cancer Quality of Life (<span style="color: OrangeRed;">SCQoL</span>) Questionnaire.</p>
@@ -494,10 +482,12 @@ P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp
 <p><span class="citation" data-cites="Linacre2022">Linacre (<a href="#/references-1" role="doc-biblioref" onclick="">2022</a>)</span> identified 11 R packages capable of Rasch estimation and analysis.</p>
 <p>We focus on</p>
 <ul>
-<li><code>eRm</code>: does conditional ML (like RUMM2030)</li>
+<li><code>eRm</code>: does conditional ML (like RUMM2030)
+<ul>
+<li><code>iarm</code> and <code>sirt</code> (supplementary)</li>
+</ul></li>
 <li><code>TAM</code> an <code>ltm</code>: do MML (like ConQuest)</li>
 </ul>
-<p><mark style="background-color: #FFFF00">@ Karl hvad med <code>iarm</code> og <code>sirt</code>?</mark></p>
 </section>
 <section id="data-and-instrument" class="slide level2">
 <h2>Data and instrument</h2>
@@ -511,22 +501,42 @@ P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp
 
 <!--Briefly, these data contain 757 complete responses to the Rosenberg Self-Esteem scale providing measures of global self-esteem (Rosenberg, Citation1989). The Rosenberg Self-Esteem scale used here consists of 10 items, five of which were positively worded and five negatively worded. All items on the scale were rated on a 4-point Likert scale with verbal anchors of Strongly Disagree (0), Disagree (1), Agree (2) and Strongly Agree (3). The frequency of responses to each category are reported in Table 1. The survey respondents were an average age was 22.4 years (SD ±  7.2 years) ranging from 16 to 75 years. The sample was 42% male, 48% female and the remaining 10% did not disclose sex. The respondents were 67.9% Caucasian, 12.8% Black, 2.4% Hispanic, 3.4% Asian, 1.7% Multiracial, 0.3% other races and 11.5% did not report race.-->
 </section>
+<section id="r-prerequisites" class="slide level2">
+<h2>R prerequisites</h2>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-1_136982f3cd0d93a37b256ac4fb8ed9d1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#library(readr)</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(eRm)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(iarm)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(RASCHplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="general-r-stuff" class="slide level2">
+<h2>General R stuff</h2>
+<ul>
+<li><code>eRm::PCM</code> is the same as <code>PCM</code> when <code>eRm</code> package is loaded.</li>
+</ul>
+</section>
+<section id="data-availability" class="slide level2">
+<h2>Data availability</h2>
+<p>Download data sets from <a href="biostat.ku.dk/Rasch">biostat.ku.dk/Rasch</a></p>
+</section>
 <section id="data-management" class="slide level2">
 <h2>Data management</h2>
 <p>We load data:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-1_170dfbfb88358d87efd3e4b4d83a1e95">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-2_8ab0d99d23f46cfc8a90b87f448496e3">
 
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-2_0ab93eaa48e9f8db397edc6b9f2ebbf7">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>SCQOL0 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"SCQOL.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-3_b58eadc41bbc97ac8cfff22fc471a606">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>SCQOL0 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"SCQOL.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-management-1" class="slide level2">
 <h2>Data management</h2>
 <p>The top six rows of our data are</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-3_af56159f1161ced3b5e52ccd48884d53">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">head</span>(SCQOL0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-4_c3a79583cd066cf267f77ccf63d3fadd">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">head</span>(SCQOL0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 15
      ID   Sex   Age SCQoLQ1 SCQoLQ2 SCQoLQ3 SCQoLQ4 SCQoLQ5 SCQoLQ6 SCQoLQ7
@@ -537,32 +547,43 @@ P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp
 4     7     1    69       1       2       1       0       0       0       1
 5     8     1    72       0       1       0       0       0       0       1
 6    11     1    65       1       0       0       0       1       0       1
-# … with 5 more variables: SCQoLQ8 &lt;dbl&gt;, SCQoLQ9 &lt;dbl&gt;, SCQoLQ10 &lt;dbl&gt;,
+# ℹ 5 more variables: SCQoLQ8 &lt;dbl&gt;, SCQoLQ9 &lt;dbl&gt;, SCQoLQ10 &lt;dbl&gt;,
 #   score9 &lt;dbl&gt;, score10 &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-4_c01ac7eccf291a3c2044ce6282b957f7">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-5_c093a7bfcc9e4522667ac87502532c58">
 
 </div>
 </section>
 <section id="data-management-2" class="slide level2">
 <h2>Data management</h2>
-<p>Let’s remove extreme total scores</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-5_3af299af2015b363916861bef42958c6">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>SCQOL <span class="ot">&lt;-</span> SCQOL0 <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">na.omit</span>(SCQoLQ1<span class="sc">:</span>SCQoLQ9) <span class="sc">%&gt;%</span> <span class="co"># @Karl?</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">filter</span>(<span class="fu">rowSums</span>(.[<span class="dv">4</span><span class="sc">:</span><span class="dv">12</span>]) <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">rowSums</span>(.[<span class="dv">4</span><span class="sc">:</span><span class="dv">12</span>]) <span class="sc">!=</span> <span class="dv">3</span><span class="sc">*</span><span class="dv">9</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s remove missing and extreme total scores</p>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-6_0b64b2363d213e47834aa318624f86d2">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>SCQOL <span class="ot">&lt;-</span> SCQOL0 <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">na.omit</span>(SCQoLQ1<span class="sc">:</span>SCQoLQ9) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">filter</span>(<span class="fu">rowSums</span>(.[<span class="dv">4</span><span class="sc">:</span><span class="dv">12</span>]) <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">rowSums</span>(.[<span class="dv">4</span><span class="sc">:</span><span class="dv">12</span>]) <span class="sc">!=</span> <span class="dv">3</span><span class="sc">*</span><span class="dv">9</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<!--If the complete data does not fit the model something is wrong-->
 </section>
 <section id="data-management-3" class="slide level2">
 <h2>Data management</h2>
 <p>We create an object containing the items:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-6_5573294ce12eaacd99afc8f7dfb8dbdc">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>items <span class="ot">&lt;-</span> SCQOL <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">'SCQoLQ'</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) </span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="fu">head</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-7_7f41f6e41a9aac094d7037b85a02b5ed">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>items <span class="ot">&lt;-</span> SCQOL <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">'SCQoLQ'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-8_bb8d52a7e9f2816c37d323bd5477c2b6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">dim</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 149   9</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-9_f0537e44b2d33ad6f91e090607802e17">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">head</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 9
   SCQoLQ1 SCQoLQ2 SCQoLQ3 SCQoLQ4 SCQoLQ5 SCQoLQ6 SCQoLQ7 SCQoLQ8 SCQoLQ9
@@ -575,13 +596,31 @@ P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp
 6       1       0       0       0       1       0       1       0       1</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-7_37850814c48a606e7ea68c18449ae627">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-10_7a156ef6041b3a58cccfae7e2053d230">
 
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-8_f7460f078bcf60bf094c38af9c019e5d">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-11_0037aea8379151e3b8ee9d0ecf871cff">
 
 </div>
-</section></section>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-12_89947eae2ce274e63278bc0c762b2e97">
+
+</div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-13_20e1174409af3986b1fed7123cf3af91">
+
+</div>
+</div>
+</section>
+<section id="visualise-distribution-of-item-scores-raschplot" class="slide level2">
+<h2>Visualise distribution of item scores (<code>RASCHplot</code>)</h2>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-14_d28cb78795a876c15487351370823914">
+
+</div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-15_626e93ebb23193c4b9c758f1cf0f090d">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">library</span>(RASCHplot)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">BARplot</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section></section>
 <section>
 <section class="title-slide slide level1 agenda-slide center">
 <h1>1. Estimate the Rasch model</h1>
@@ -612,6 +651,9 @@ P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp
 <p>Exercise 3/3</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Reporting</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>References</p>
 </div></li>
 </ul>
@@ -634,150 +676,30 @@ P(X_{vi}=x|\theta_v=\theta)=\frac{\exp(x\theta-\beta_{ix})}{\sum_{l=1}^{m_i}\exp
 <h2>Estimate the Rasch model</h2>
 <!--The scale is thought to measure a single underlying construct, or said another way, a unidimensional construct. The Rasch model was easily fit to these data and obtain the model results using the RM function (see below).-->
 <p>The Rasch model is fitted to data using the <code>PCM</code> function from the <code>eRm</code> package:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-9_a3768139fb36b84c38306cc6e9b80b02">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Load data</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">library</span>(eRm)</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># Fit Rasch model</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>fit <span class="ot">&lt;-</span> <span class="fu">PCM</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-17_24b20f601078662b562ef4a1379bde93">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Load package</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">library</span>(eRm)</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># Fit Rasch model</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>fit <span class="ot">&lt;-</span> <span class="fu">PCM</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="show-results-of-estimation" class="slide level2">
-<h2>Show results of estimation</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-10_b5cafd100954dd7edbbaf27e26e889e8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-11_576f2b2042810694111f8b37516bf6f6">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Results of PCM estimation: 
-
-Call:  PCM(X = items) 
-
-Conditional log-likelihood: -618.8389 
-Number of iterations: 97 
-Number of parameters: 25 
-
-Item (Category) Difficulty Parameters (eta): with 0.95 CI:
-           Estimate Std. Error lower CI upper CI
-SCQoLQ1.c2   -0.591      0.344   -1.265    0.083
-SCQoLQ1.c3    0.693      0.540   -0.366    1.752
-SCQoLQ2.c1   -1.521      0.220   -1.952   -1.090
-SCQoLQ2.c2   -1.680      0.313   -2.294   -1.067
-SCQoLQ2.c3   -0.811      0.444   -1.681    0.059
-SCQoLQ3.c1    0.244      0.249   -0.243    0.731
-SCQoLQ3.c2    1.022      0.418    0.203    1.842
-SCQoLQ3.c3    2.563      0.676    1.239    3.888
-SCQoLQ4.c1   -0.926      0.215   -1.346   -0.505
-SCQoLQ4.c2   -0.425      0.344   -1.099    0.249
-SCQoLQ4.c3    1.139      0.585   -0.007    2.284
-SCQoLQ5.c1    1.398      0.340    0.732    2.064
-SCQoLQ5.c2    2.048      0.508    1.053    3.043
-SCQoLQ5.c3    3.262      0.707    1.877    4.648
-SCQoLQ6.c1    1.075      0.292    0.502    1.648
-SCQoLQ6.c2    2.855      0.639    1.604    4.107
-SCQoLQ7.c1   -3.032      0.236   -3.495   -2.569
-SCQoLQ7.c2   -2.565      0.337   -3.226   -1.905
-SCQoLQ7.c3   -1.107      0.537   -2.160   -0.054
-SCQoLQ8.c1    0.571      0.255    0.070    1.071
-SCQoLQ8.c2    3.577      0.996    1.626    5.529
-SCQoLQ8.c3    3.227      0.722    1.811    4.642
-SCQoLQ9.c1   -2.929      0.250   -3.419   -2.439
-SCQoLQ9.c2   -3.548      0.329   -4.192   -2.904
-SCQoLQ9.c3   -3.421      0.393   -4.191   -2.651
-
-Item Easiness Parameters (beta) with 0.95 CI:
-                Estimate Std. Error lower CI upper CI
-beta SCQoLQ1.c1    1.119      0.212    0.702    1.535
-beta SCQoLQ1.c2    0.591      0.344   -0.083    1.265
-beta SCQoLQ1.c3   -0.693      0.540   -1.752    0.366
-beta SCQoLQ2.c1    1.521      0.220    1.090    1.952
-beta SCQoLQ2.c2    1.680      0.313    1.067    2.294
-beta SCQoLQ2.c3    0.811      0.444   -0.059    1.681
-beta SCQoLQ3.c1   -0.244      0.249   -0.731    0.243
-beta SCQoLQ3.c2   -1.022      0.418   -1.842   -0.203
-beta SCQoLQ3.c3   -2.563      0.676   -3.888   -1.239
-beta SCQoLQ4.c1    0.926      0.215    0.505    1.346
-beta SCQoLQ4.c2    0.425      0.344   -0.249    1.099
-beta SCQoLQ4.c3   -1.139      0.585   -2.284    0.007
-beta SCQoLQ5.c1   -1.398      0.340   -2.064   -0.732
-beta SCQoLQ5.c2   -2.048      0.508   -3.043   -1.053
-beta SCQoLQ5.c3   -3.262      0.707   -4.648   -1.877
-beta SCQoLQ6.c1   -1.075      0.292   -1.648   -0.502
-beta SCQoLQ6.c2   -2.855      0.639   -4.107   -1.604
-beta SCQoLQ7.c1    3.032      0.236    2.569    3.495
-beta SCQoLQ7.c2    2.565      0.337    1.905    3.226
-beta SCQoLQ7.c3    1.107      0.537    0.054    2.160
-beta SCQoLQ8.c1   -0.571      0.255   -1.071   -0.070
-beta SCQoLQ8.c2   -3.577      0.996   -5.529   -1.626
-beta SCQoLQ8.c3   -3.227      0.722   -4.642   -1.811
-beta SCQoLQ9.c1    2.929      0.250    2.439    3.419
-beta SCQoLQ9.c2    3.548      0.329    2.904    4.192
-beta SCQoLQ9.c3    3.421      0.393    2.651    4.191</code></pre>
-</div>
-<div class="cell-output-display">
-
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ac70a81dc091b35c279d" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ac70a81dc091b35c279d">{"x":null,"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-</section>
-<section id="extract-estimates" class="slide level2">
-<h2>Extract estimates</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-12_1a5b83f87009af82baccfac0ea07f2e6">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">names</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="extract-estimates-etc." class="slide level2">
+<h2>Extract estimates etc.</h2>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-18_e71ab08d3ddf415baa00fbe4cc6b75ce">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">names</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "X"           "X01"         "model"       "loglik"      "npar"       
  [6] "iter"        "convergence" "etapar"      "se.eta"      "hessian"    
 [11] "betapar"     "se.beta"     "W"           "call"       </code></pre>
 </div>
 </div>
-<div class="fragment">
-<p>Item (Category) Difficulty Parameters (eta):</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-13_0e31523adc1bfe105ca5c4aaa5b31ca6">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>fit<span class="sc">$</span>etapar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>SCQoLQ1.c2 SCQoLQ1.c3 SCQoLQ2.c1 SCQoLQ2.c2 SCQoLQ2.c3 SCQoLQ3.c1 SCQoLQ3.c2 
--0.5909605  0.6931075 -1.5210116 -1.6803842 -0.8106023  0.2437778  1.0223232 
-SCQoLQ3.c3 SCQoLQ4.c1 SCQoLQ4.c2 SCQoLQ4.c3 SCQoLQ5.c1 SCQoLQ5.c2 SCQoLQ5.c3 
- 2.5633646 -0.9255697 -0.4249688  1.1385153  1.3979204  2.0477828  3.2624519 
-SCQoLQ6.c1 SCQoLQ6.c2 SCQoLQ7.c1 SCQoLQ7.c2 SCQoLQ7.c3 SCQoLQ8.c1 SCQoLQ8.c2 
- 1.0751980  2.8552553 -3.0322265 -2.5653816 -1.1067099  0.5705872  3.5772482 
-SCQoLQ8.c3 SCQoLQ9.c1 SCQoLQ9.c2 SCQoLQ9.c3 
- 3.2266818 -2.9289613 -3.5479131 -3.4208010 </code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="extract-estimates-1" class="slide level2">
-<h2>Extract estimates</h2>
-<p>Item Easiness Parameters (beta):</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-14_dfb819b57604611df7bf683b857f6b4b">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>fit<span class="sc">$</span>betapar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>beta SCQoLQ1.c1 beta SCQoLQ1.c2 beta SCQoLQ1.c3 beta SCQoLQ2.c1 beta SCQoLQ2.c2 
-      1.1187234       0.5909605      -0.6931075       1.5210116       1.6803842 
-beta SCQoLQ2.c3 beta SCQoLQ3.c1 beta SCQoLQ3.c2 beta SCQoLQ3.c3 beta SCQoLQ4.c1 
-      0.8106023      -0.2437778      -1.0223232      -2.5633646       0.9255697 
-beta SCQoLQ4.c2 beta SCQoLQ4.c3 beta SCQoLQ5.c1 beta SCQoLQ5.c2 beta SCQoLQ5.c3 
-      0.4249688      -1.1385153      -1.3979204      -2.0477828      -3.2624519 
-beta SCQoLQ6.c1 beta SCQoLQ6.c2 beta SCQoLQ7.c1 beta SCQoLQ7.c2 beta SCQoLQ7.c3 
-     -1.0751980      -2.8552553       3.0322265       2.5653816       1.1067099 
-beta SCQoLQ8.c1 beta SCQoLQ8.c2 beta SCQoLQ8.c3 beta SCQoLQ9.c1 beta SCQoLQ9.c2 
-     -0.5705872      -3.5772482      -3.2266818       2.9289613       3.5479131 
-beta SCQoLQ9.c3 
-      3.4208010 </code></pre>
-</div>
-</div>
-</section>
-<section id="note" class="slide level2">
-<h2>Note</h2>
-<p>The default settings fix the scale by fixing the sum of item easiness parameters to zero. The scale can easily be set by fixing the first easiness (beta) to 0 instead by using <code>sum0 = FALSE</code> as an argument in the function. These options provide users for flexibility in modelling and even greater flexibility can be achieved by utilizing the design matrix formulation.</p>
+<!--The default settings fix the scale by fixing the sum of item easiness parameters to zero. The scale can easily be set by fixing the first easiness (beta) to 0 instead by using `sum0 = FALSE` as an argument in the function. These options provide users for flexibility in modelling and even greater flexibility can be achieved by utilizing the design matrix formulation.-->
 </section>
 <section id="thresholds" class="slide level2">
 <h2>Thresholds</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-15_70d805cf4ba7264b942b474a22e6b5f0">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>(th <span class="ot">&lt;-</span> <span class="fu">thresholds</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-19_471fa7c01df133be11fe99c5b206d165">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>(th <span class="ot">&lt;-</span> <span class="fu">thresholds</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Design Matrix Block 1:
@@ -793,316 +715,102 @@ SCQoLQ8  1.07556     0.57059     3.00666    -0.35057
 SCQoLQ9 -1.14027    -2.92896    -0.61895     0.12711</code></pre>
 </div>
 </div>
-<p><mark style="background-color: #FFFF00">@ Karl Noget at bemærke/vise?</mark></p>
+<p><mark style="background-color: #FFFF00">@ Karl Noget at bemærke/vise? NA</mark></p>
 </section>
+<section id="the-item-category-characteristic-curves-icccs" class="slide level2">
+<h2>The item <span style="color: OrangeRed;">category</span> characteristic curves (IcCCs)</h2>
+<!--A function that shows the relationship between ability ($\theta$) and the probability of answering an item correctly.
+
+For polytomous items, the `plotICC` function plots ICCs for each category within all items.-->
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-20_c473a334792b65b1d40ce82cd416275d">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">plotICC</span>(fit, <span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">mplot=</span><span class="cn">FALSE</span>, <span class="at">legpos =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<!--This plot shows the item characteristic curve for the item. The x-axis show the ability continuum the y-axis the response probability. The continuous line describes the probability to respond correctly to the problem given a level of ability. The difficulty of the item is the where the probability of a correct response equals 0.5. The option empICC="raw" also plots the relative frequencies of positive responses for each rawscore group at the position of the corresponding ability level. The blue dotted lines represent the 95% confidence level for the relative frequencies and are shown if options are provided if empCI = is specified.-->
+<img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
+<section id="the-icccs" class="slide level2">
+<h2>The IcCCs</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
+<section id="the-icccs-1" class="slide level2">
+<h2>The IcCCs</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
+<section id="the-icccs-2" class="slide level2">
+<h2>The IcCCs</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
 <section id="person-parameters" class="slide level2">
 <h2>Person parameters</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-16_75a10215942e6b2ab76271940ee277ff">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>ppar <span class="ot">&lt;-</span> <span class="fu">person.parameter</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-24_01e445d5128d8d9c7c448f04cd385b11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>ppar <span class="ot">&lt;-</span> <span class="fu">person.parameter</span>(fit)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">length</span>(ppar<span class="sc">$</span>thetapar<span class="sc">$</span>NAgroup1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 149</code></pre>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-17_ecc7fb5d0a84d8576597490ee30f16bf">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">summary</span>(ppar)</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="do">## S3 method for class 'ppar'</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">print</span>(ppar)</span>
-<span id="cb19-4"><a href="#cb19-4"></a><span class="do">## S3 method for class 'ppar'</span></span>
-<span id="cb19-5"><a href="#cb19-5"></a><span class="fu">plot</span>(ppar, <span class="at">xlab =</span> <span class="st">"Person Raw Scores"</span>,</span>
-<span id="cb19-6"><a href="#cb19-6"></a>   <span class="at">ylab =</span> <span class="st">"Person Parameters (Theta)"</span>)</span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="do">## S3 method for class 'ppar'</span></span>
-<span id="cb19-8"><a href="#cb19-8"></a><span class="fu">coef</span>(ppar, <span class="at">extrapolated =</span> <span class="cn">TRUE</span>, ...)</span>
-<span id="cb19-9"><a href="#cb19-9"></a><span class="do">## S3 method for class 'ppar'</span></span>
-<span id="cb19-10"><a href="#cb19-10"></a><span class="fu">logLik</span>(ppar)</span>
-<span id="cb19-11"><a href="#cb19-11"></a><span class="do">## S3 method for class 'ppar'</span></span>
-<span id="cb19-12"><a href="#cb19-12"></a><span class="fu">confint</span>(ppar, parm, <span class="at">level =</span> <span class="fl">0.95</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><mark style="background-color: #FFFF00">Bemærk at det også virker for når der er manglende data.</mark></p>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-25_fe436ec455911ac8466237df84b6c0a3">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">summary</span>(ppar)</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="do">## S3 method for class 'ppar'</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="fu">print</span>(ppar)</span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="do">## S3 method for class 'ppar'</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="fu">plot</span>(ppar, ...)</span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="do">## S3 method for class 'ppar'</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="fu">coef</span>(ppar, <span class="at">extrapolated =</span> <span class="cn">TRUE</span>, ...)</span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="do">## S3 method for class 'ppar'</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="fu">logLik</span>(ppar)</span>
+<span id="cb20-10"><a href="#cb20-10"></a><span class="do">## S3 method for class 'ppar'</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a><span class="fu">confint</span>(ppar, parm, <span class="at">level =</span> <span class="fl">0.95</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="visualisation" class="slide level2">
-<h2>Visualisation</h2>
+<section id="person-parameters-1" class="slide level2">
+<h2>Person parameters</h2>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-26_13d6c49f82f181d6a7ba11373e99e9af">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">plot</span>(ppar, <span class="at">xlab =</span> <span class="st">"Person Raw Scores"</span>, <span class="at">ylab =</span> <span class="fu">bquote</span>(<span class="st">"Person parameters "</span><span class="sc">~</span>(theta)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-26-1.png" width="960" class="r-stretch"></section>
+<section id="person-parameters-2" class="slide level2">
+<h2>Person parameters</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
+<section id="person-item-maps" class="slide level2">
+<h2>Person-item maps</h2>
 <p>The estimates for persons and items can be viewed in the person-item map using the <code>plotPImap</code> command.</p>
 <p>These figures help provide a representation of how the difficulty of items relates to the person-parameters for the fitted Rasch model.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-18_c8605ab4985bf13a903c85fba771c015">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">plotPImap</span>(fit, <span class="at">sorted =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-28_e4319c2769fc0c14c6848feda4a251b5">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">plotPImap</span>(fit, <span class="at">sorted =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This map is created using <code>plotPImap(fit, sorted = TRUE)</code>, where the argument <code>sorted = TRUE</code> is not necessary, but will help with interpretation and identifying how items are distributed across the person parameter distributions.</p>
-</section>
-<section id="visualisation---note" class="slide level2">
-<h2>Visualisation - note</h2>
-<p>The <code>plotPImap</code> only needs the <code>PCM</code>-object, i.e., not necessarily the person parameters - they are automatically computed using <code>person.parameter</code> function by the <code>plotPImap</code> function.</p>
 </section>
 <section id="the-person-item-map" class="slide level2">
 <h2>The person-item map</h2>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"><p><mark style="background-color: #FFFF00">@ Karl Noget at bemærke?</mark></p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"><p><mark style="background-color: #FFFF00">@ Karl Noget at bemærke?Ja, Q8 og Q5 er ikke ordnede, Q6 har en manglende kategori. De bliver vist i ordnet rækkefølge ifht sværhedsgrad.</mark></p>
+<!--## Visualisation - note
+
+- The `plotPImap` only needs the `PCM`-object, i.e., not necessarily the person parameters - they are automatically computed using `person.parameter` function by the `plotPImap` function.
+- This map is created using `plotPImap(fit, sorted = TRUE)`, where the argument `sorted = TRUE` is not necessary, but will help with interpretation and identifying how items are distributed across the person parameter distributions.
+-->
 </section>
-<section id="wrightmap" class="slide level2">
-<h2><code>WrightMap</code></h2>
-<p>The WrightMap package provides functions to easily create these Wright Maps from item parameters and person estimates stored as R objects.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-20_6b81d4d5f69f2b65a3647de0045d5bab">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">#install.packages("WrightMap")</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">library</span>(WrightMap)</span>
-<span id="cb21-3"><a href="#cb21-3"></a></span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="fu">wrightMap</span>(fit<span class="sc">$</span>etapar, ppar<span class="sc">$</span>theta.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-<div class="cell-output cell-output-stdout">
-<pre><code>     Person Parameter NAgroup Interpolated
-P1        -1.21000224       1            0
-P2        -1.59364874       1            0
-P3        -2.07390314       1            0
-P4        -0.89021538       1            0
-P5        -1.21000224       1            0
-P6        -1.59364874       1            0
-P7        -0.61489043       1            0
-P8        -2.71159675       1            0
-P9        -2.07390314       1            0
-P10       -0.61489043       1            0
-P11       -0.15389830       1            0
-P12       -0.61489043       1            0
-P13       -2.07390314       1            0
-P14       -2.71159675       1            0
-P15       -0.37204196       1            0
-P16       -0.89021538       1            0
-P17       -2.71159675       1            0
-P18       -2.07390314       1            0
-P19        0.22833446       1            0
-P20       -2.07390314       1            0
-P21       -2.07390314       1            0
-P22       -2.71159675       1            0
-P23       -1.21000224       1            0
-P24       -2.71159675       1            0
-P25       -2.71159675       1            0
-P26       -3.67039026       1            0
-P27       -3.67039026       1            0
-P28       -2.07390314       1            0
-P29       -1.59364874       1            0
-P30       -2.71159675       1            0
-P31       -0.89021538       1            0
-P32       -2.07390314       1            0
-P33       -0.37204196       1            0
-P34       -1.59364874       1            0
-P35       -2.07390314       1            0
-P36       -0.37204196       1            0
-P37        0.56138413       1            0
-P38       -2.07390314       1            0
-P39       -1.21000224       1            0
-P40       -1.59364874       1            0
-P41       -3.67039026       1            0
-P42       -0.61489043       1            0
-P43        1.01507662       1            0
-P44       -3.67039026       1            0
-P45        1.16412418       1            0
-P46       -1.59364874       1            0
-P47       -3.67039026       1            0
-P48       -0.37204196       1            0
-P49       -2.07390314       1            0
-P50       -0.61489043       1            0
-P51       -1.59364874       1            0
-P52        1.31693388       1            0
-P53       -0.89021538       1            0
-P54       -0.61489043       1            0
-P55       -2.71159675       1            0
-P56       -2.07390314       1            0
-P57       -1.59364874       1            0
-P58        0.71627663       1            0
-P59       -1.59364874       1            0
-P60       -0.61489043       1            0
-P61       -0.37204196       1            0
-P62       -3.67039026       1            0
-P63       -3.67039026       1            0
-P64       -1.21000224       1            0
-P65       -3.67039026       1            0
-P66        0.04490396       1            0
-P67       -2.07390314       1            0
-P68       -0.37204196       1            0
-P69       -2.71159675       1            0
-P70       -2.71159675       1            0
-P71       -2.71159675       1            0
-P72       -2.71159675       1            0
-P73       -2.71159675       1            0
-P74       -1.21000224       1            0
-P75       -0.37204196       1            0
-P76       -3.67039026       1            0
-P77       -3.67039026       1            0
-P78       -0.61489043       1            0
-P79       -0.89021538       1            0
-P80       -2.71159675       1            0
-P81       -0.15389830       1            0
-P82       -3.67039026       1            0
-P83       -2.07390314       1            0
-P84       -2.07390314       1            0
-P85       -3.67039026       1            0
-P86        0.39957005       1            0
-P87       -2.07390314       1            0
-P88       -0.61489043       1            0
-P89       -0.89021538       1            0
-P90       -2.07390314       1            0
-P91        2.36074125       1            0
-P92       -2.71159675       1            0
-P93        0.56138413       1            0
-P94       -0.37204196       1            0
-P95       -3.67039026       1            0
-P96        0.22833446       1            0
-P97       -2.71159675       1            0
-P98       -1.21000224       1            0
-P99       -0.89021538       1            0
-P100      -2.71159675       1            0
-P101      -1.59364874       1            0
-P102      -2.07390314       1            0
-P103      -2.07390314       1            0
-P104      -0.61489043       1            0
-P105      -2.71159675       1            0
-P106      -1.59364874       1            0
-P107      -1.21000224       1            0
-P108      -0.61489043       1            0
-P109      -2.07390314       1            0
-P110       1.01507662       1            0
-P111      -1.59364874       1            0
-P112      -2.71159675       1            0
-P113      -3.67039026       1            0
-P114       0.04490396       1            0
-P115      -0.61489043       1            0
-P116      -1.59364874       1            0
-P117      -3.67039026       1            0
-P118      -2.71159675       1            0
-P119      -1.21000224       1            0
-P120       0.71627663       1            0
-P121      -3.67039026       1            0
-P122      -3.67039026       1            0
-P123      -1.59364874       1            0
-P124       0.22833446       1            0
-P125      -3.67039026       1            0
-P126      -2.71159675       1            0
-P127      -2.07390314       1            0
-P128      -3.67039026       1            0
-P129      -3.67039026       1            0
-P130      -0.37204196       1            0
-P131      -2.07390314       1            0
-P132       1.31693388       1            0
-P133      -3.67039026       1            0
-P134      -1.21000224       1            0
-P135      -1.21000224       1            0
-P136      -1.59364874       1            0
-P137      -3.67039026       1            0
-P138      -1.21000224       1            0
-P139      -1.59364874       1            0
-P140       0.22833446       1            0
-P141      -0.61489043       1            0
-P142      -2.07390314       1            0
-P143      -3.67039026       1            0
-P144      -2.71159675       1            0
-P145      -3.67039026       1            0
-P146       0.39957005       1            0
-P147      -1.59364874       1            0
-P148      -3.67039026       1            0
-P149       1.01507662       1            0</code></pre>
+<section id="parmat" class="slide level2">
+<h2><code>PARmat</code></h2>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-30_5c6f1e24e38636f5568333758e8b4a16">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>PARmat <span class="ot">&lt;-</span> <span class="cf">function</span>(x, par, <span class="at">byrow =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  mi <span class="ot">&lt;-</span> <span class="fu">apply</span>(x, <span class="dv">2</span>, max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  cols <span class="ot">&lt;-</span> <span class="fu">do.call</span>(c, <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="cf">function</span>(i) <span class="dv">1</span><span class="sc">:</span>mi[i]))</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  rows <span class="ot">&lt;-</span> <span class="fu">do.call</span>(c, <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="cf">function</span>(i) <span class="fu">rep</span>(i, mi[i])))</span>
+<span id="cb23-5"><a href="#cb23-5"></a>  thr <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(x), <span class="at">ncol =</span> <span class="fu">max</span>(x))</span>
+<span id="cb23-6"><a href="#cb23-6"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(par)) {</span>
+<span id="cb23-7"><a href="#cb23-7"></a>    thr[rows[i], cols[i]] <span class="ot">&lt;-</span> par[i]</span>
+<span id="cb23-8"><a href="#cb23-8"></a>  }</span>
+<span id="cb23-9"><a href="#cb23-9"></a>  <span class="cf">if</span>(byrow) <span class="fu">t</span>(thr) <span class="cf">else</span> thr</span>
+<span id="cb23-10"><a href="#cb23-10"></a>}</span>
+<span id="cb23-11"><a href="#cb23-11"></a></span>
+<span id="cb23-12"><a href="#cb23-12"></a>thr <span class="ot">&lt;-</span> <span class="fu">PARmat</span>(<span class="at">x =</span> items, <span class="at">par =</span> fit<span class="sc">$</span>etapar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
-<section id="wrightmap-1" class="slide level2">
-<h2><code>WrightMap</code></h2>
-<p>We can draw a simple item map by calling one of the item side functions. Currently there are three: <code>itemModern</code>, <code>itemClassic</code>, and <code>itemHist</code>.</p>
-<p>The <code>itemModern</code> function is the default called by <code>wrightMap</code>.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-21_b0d7f2797b50e7de1eb73899c50b4f74">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>th.tab <span class="ot">&lt;-</span> th<span class="sc">$</span>threshtable<span class="sc">$</span><span class="st">`</span><span class="at">1</span><span class="st">`</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">itemModern</span>(th.tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
-<section id="wrightmap-2" class="slide level2">
-<h2><code>WrightMap</code></h2>
-<p>The itemClassic function creates item sides inspired by text-based Wright Maps.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-22_d3bb14b0d2f7afaf213947456e591c81">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">itemClassic</span>(th.tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
-<section id="wrightmap-3" class="slide level2">
-<h2><code>WrightMap</code></h2>
-<p>Finally, the <code>itemHist</code> function plots the items as a histogram.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-23_947d1d5c1dc04eb409ecf327adad81e4">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">itemHist</span>(th.tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
-<section id="w" class="slide level2">
-<h2>W</h2>
-<p><mark style="background-color: #FFFF00">@ Karl hvad er multi proficiency?</mark></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-24_81c6cb9d2617ef7aa3192a1cd554bf21">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="do">## Mock results</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>multi.proficiency <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb26-3"><a href="#cb26-3"></a>  <span class="at">d1 =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span>  <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">sd =</span> .<span class="dv">5</span>),</span>
-<span id="cb26-4"><a href="#cb26-4"></a>  <span class="at">d2 =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span>   <span class="fl">0.0</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb26-5"><a href="#cb26-5"></a>  <span class="at">d3 =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span>  <span class="sc">+</span><span class="fl">0.5</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb26-6"><a href="#cb26-6"></a>  <span class="at">d4 =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span>   <span class="fl">0.0</span>, <span class="at">sd =</span> .<span class="dv">5</span>),</span>
-<span id="cb26-7"><a href="#cb26-7"></a>  <span class="at">d5 =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span>  <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">sd =</span> .<span class="dv">75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-25_0ba94fb9d2c6f789f7820ff9b0d7294e">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">personHist</span>(multi.proficiency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
-<section class="slide level2">
-
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-26_3d9a36902529178956d76e5a3c32bd66">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">personDens</span>(multi.proficiency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-26-1.png" width="960" class="r-stretch"></section>
-<section class="slide level2">
-
-<p>To use these plots in a Wright Map, use the item.side and person.side parameters.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-27_f4ff41e102feed586a82537602b04aef">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">wrightMap</span>(multi.proficiency, th.tab, </span>
-<span id="cb29-2"><a href="#cb29-2"></a>          <span class="at">item.side =</span> itemClassic, <span class="at">item.prop =</span> <span class="fl">0.5</span>,<span class="at">person.side =</span> personDens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-<div class="cell-output cell-output-stdout">
-<pre><code>          Location Threshold 1 Threshold 2 Threshold 3
-SCQoLQ1  0.2310358  -1.1187234   0.5277629   1.2840680
-SCQoLQ2 -0.2702008  -1.5210116  -0.1593726   0.8697819
-SCQoLQ3  0.8544549   0.2437778   0.7785453   1.5410414
-SCQoLQ4  0.3795051  -0.9255697   0.5006009   1.5634840
-SCQoLQ5  1.0874840   1.3979204   0.6498624   1.2146691
-SCQoLQ6  1.4276276   1.0751980   1.7800573          NA
-SCQoLQ7 -0.3689033  -3.0322265   0.4668449   1.4586718
-SCQoLQ8  1.0755606   0.5705872   3.0066610  -0.3505664
-SCQoLQ9 -1.1402670  -2.9289613  -0.6189519   0.1271121</code></pre>
-</div>
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
-<section id="the-item-characteristic-curves-iccs" class="slide level2">
-<h2>The item characteristic curves (ICCs)</h2>
-<p>A function that shows the relationship between ability (<span class="math inline">\(\theta\)</span>) and the probability of answering an item correctly.</p>
-</section>
-<section id="iccs" class="slide level2">
-<h2>ICCs</h2>
-<p>For dichotomous scales, the ICCs for all items can be obtained using the <code>plotICC</code> command. The command plots the ICC for each item on a separate window so that each item can be inspected individually.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-28_bcbec9a02b7973953356e68c14f1f4ed">
-
-</div>
-<!-- @Karl: empirical ICC’s showing t↦P(yij=1|Sj=t) in stead of θ↦P(yij=1|θj=θ)?-->
-<p>All the ICCs can be plotted on the same window as well, using <code>plotjointICC</code>,</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-29_d5cacca9518cd75df49d19d6fa4c1991">
-
-</div>
-<!-- The ICC plot highlights how the items are distributed and ordered the item legend based on the difficulty. The difficulty in jointly plotting all the ICCs is that some of the curves can be difficult to see (e.g., item 7). -->
-</section>
-<section id="the-item-category-characteristic-curves-icccs" class="slide level2">
-<h2>The item <span style="color: OrangeRed;">category</span> characteristic curves (IcCCs)</h2>
-<p>For polytomnous scales, the <code>plotICC</code> function plots ICCs for each category within all items.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-30_d6f8dff315c9bb2e0307f8f5384c7983">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">plotICC</span>(fit, <span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">mplot=</span><span class="cn">FALSE</span>, <span class="at">legpos =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<!--This plot shows the item characteristic curve for the item. The x-axis show the ability continuum the y-axis the response probability. The continuous line describes the probability to respond correctly to the problem given a level of ability. The difficulty of the item is the where the probability of a correct response equals 0.5. The option empICC="raw" also plots the relative frequencies of positive responses for each rawscore group at the position of the corresponding ability level. The blue dotted lines represent the 95% confidence level for the relative frequencies and are shown if options are provided if empCI = is specified.-->
-</section>
-<section id="the-icccs" class="slide level2">
-<h2>The I<span style="color: OrangeRed;">c</span>CCs</h2>
-<p><mark style="background-color: #FFFF00">@ Karl Noget at bemærke? Item 5?</mark></p>
-
-<img data-src="index_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section>
-<section id="the-icccs-1" class="slide level2">
-<h2>The I<span style="color: OrangeRed;">c</span>CCs</h2>
-<p><mark style="background-color: #FFFF00">@ Karl Noget at bemærke?</mark></p>
-
-<img data-src="index_files/figure-revealjs/unnamed-chunk-32-1.png" width="960" class="r-stretch"></section></section>
+</section></section>
 <section>
 <section class="title-slide slide level1 agenda-slide center">
 <h1>Exercise 1/3</h1>
@@ -1133,6 +841,9 @@ SCQoLQ9 -1.1402670  -2.9289613  -0.6189519   0.1271121</code></pre>
 <p>Exercise 3/3</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Reporting</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>References</p>
 </div></li>
 </ul>
@@ -1147,14 +858,22 @@ SCQoLQ9 -1.1402670  -2.9289613  -0.6189519   0.1271121</code></pre>
 <p>Recreate <a href="http://doi.wiley.com/10.1111/bjd.12036">AKQOL</a>, Fig.2:</p>
 
 <img data-src="bjd12036_f2.gif" class="r-stretch"></section>
-<section id="exercise-13-1" class="slide level2">
+<section id="exercise-13-1" class="slide level2 scrollable">
 <h2>Exercise 1/3</h2>
-<p>1.1) Load data <code>AKQOL.csv</code> into R.</p>
-<p>1.2) Fit the Rasch model using the <code>PCM()</code> function from the <code>eRm</code> package.</p>
-<p>1.3) Show results of the RM estimation using the <code>summary()</code> function.</p>
-<p>1.4) Examine the relationship between persons and items via the person-item map (<code>plotPImap()</code>).</p>
-<p>1.5) Visualise the relationship between ability and probability of answering an item correctly using the <code>plotICC</code> function.</p>
-<p>1.6) Experiment with the <code>WrigthMap</code> package.</p>
+<ol type="1">
+<li>Load data <code>AKQOL.csv</code> into R and
+<ul>
+<li>create data frame of items</li>
+<li>visualise item score distribution using <code>RASCHplot::BARplot</code>.</li>
+</ul></li>
+<li>Fit the Rasch model using <code>eRm::PCM</code>.</li>
+<li>Fit person parameters using <code>eRm::person.parameter</code>.</li>
+<li>Summarise results of the RM estimation using, e.g.:
+<ul>
+<li><code>summary</code></li>
+<li><code>eRm::plotPImap</code> <!--Examine the relationship between persons and items via the person-item map-->, <code>eRm::plotICC</code> <!--Visualise the relationship between ability and probability of answering an item correctly using the plotICC function.--></li>
+</ul></li>
+</ol>
 </section></section>
 <section class="title-slide slide level1 agenda-slide center">
 <h1>FIKA</h1>
@@ -1183,6 +902,9 @@ SCQoLQ9 -1.1402670  -2.9289613  -0.6189519   0.1271121</code></pre>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Reporting</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>References</p>
@@ -1221,183 +943,72 @@ SCQoLQ9 -1.1402670  -2.9289613  -0.6189519   0.1271121</code></pre>
 <p>Exercise 3/3</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Reporting</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>References</p>
 </div></li>
 </ul>
 </div>
 <!--# Model diagnostics-->
-</section>
-<section id="test-the-rasch-model-1" class="slide level2">
-<h2>2. Test the Rasch model</h2>
-<p>The point of the Rasch model is very often to test whether the assumptions (unidimensionality, local independence, sufficiency, no DIF and monotonicity) are met.</p>
-<p>Assumptions met <span class="math inline">\(\Rightarrow\)</span> Rasch model fit</p>
-<p>Rasch model misfit <span class="math inline">\(\Rightarrow\)</span> assumptions not met</p>
-</section>
-<section id="testing-rasch-in-r" class="slide level2">
-<h2>Testing Rasch in R</h2>
-<p>Testing the Rasch model in R can include the following steps</p>
-<ul>
-<li><p class="fragment highlight-red">
-</p><p>Andersen’s conditional Likelihood Ratio Test</p>
-<p></p></li>
-<li><p>Wald test</p></li>
-<li><p>subgroup homogeneity plots</p></li>
-<li><p class="fragment highlight-red">
-</p><p>Infit and Outfit</p>
-<p></p></li>
-<li><p class="fragment highlight-red">
-</p><p>ICC plots compared to empirical ICC</p>
-<p></p></li>
-<li><p class="fragment highlight-red">
-</p><p>tests for local dependence</p>
-<p></p></li>
-<li><p class="fragment highlight-red">
-</p><p>differential item functioning</p>
-<p></p></li>
-</ul>
-</section>
-<section id="the-andersen-likelihood-ratio-test" class="slide level2">
-<h2>2) The Andersen likelihood ratio test</h2>
-<p>Using the <code>LRtest</code> command. The procedure tests for person homogeneity, which can be an indication of differential item function or violations of monotonicity, by estimating the item measures using two or three subgroups from the sample. Two or three subgroups are the only options, but this will likely meet most users’ needs. Invariance between the two or three sets of parameter estimates supports the model-data fit. The <code>LRtest</code> command produces the LR value (i.e., <span class="math inline">\(\sim \chi^2\)</span>), degrees of freedom and p value.</p>
-</section>
-<section class="slide level2">
+<!--## 2. Test the Rasch model
 
-<p>By default, two groups are formed based on raw scores above or below the median. Subgroups can also be created by the user based on a variable coded as a factor (e.g., sex) or based on the distribution of a quantitative variable. Because the test divides the sample into subgroups, a sufficiently large sample size is an important consideration to ensure that all subgroups are large enough.</p>
+The point of the Rasch model is very often to test whether the assumptions (unidimensionality, local independence, sufficiency, no DIF and monotonicity) are met.
+
+Assumptions met $\Rightarrow$ Rasch model fit
+
+Rasch model misfit $\Rightarrow$ assumptions not met
+-->
 </section>
-<section id="in-r" class="slide level2">
-<h2>In R</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-33_bdefd23ce59beca288917455a6964524">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># LR-test with a full raw-score split</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a>lrt.full <span class="ot">&lt;-</span> <span class="fu">LRtest</span>(fit, <span class="at">splitcr =</span> <span class="st">"all.r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in LRtest.Rm(fit, splitcr = "all.r"): 
-No items with appropriate response patterns left to perform LR-test!</code></pre>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-34_bc336a90483d55a0f822e640009e0e8f">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># LR-test with mean split, standard errors for beta's</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>lrt.mean <span class="ot">&lt;-</span> <span class="fu">LRtest</span>(fit, <span class="at">splitcr =</span> <span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in LRtest.Rm(fit, splitcr = "mean"): 
-The following items were excluded due to inappropriate response patterns within
-subgroups:
-SCQoLQ1 SCQoLQ3 SCQoLQ4 SCQoLQ5 SCQoLQ6 SCQoLQ8
-
-Full and subgroup models are estimated without these items!</code></pre>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-35_7f5cda4e858e6cf86c23b16611a99476">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>lrt.sex <span class="ot">&lt;-</span> <span class="fu">LRtest</span>(fit, <span class="at">splitcr =</span> SCQOL<span class="sc">$</span>Sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in LRtest.Rm(fit, splitcr = SCQOL$Sex): 
-The following items were excluded due to inappropriate response patterns within
-subgroups:
-SCQoLQ8 SCQoLQ5 SCQoLQ7
-
-Full and subgroup models are estimated without these items!</code></pre>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-36_29c1ea769ec6344cf7e1ed88559a5a41">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>splitvec <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(SCQOL<span class="sc">$</span>Age <span class="sc">&gt;</span> <span class="fu">median</span>(SCQOL<span class="sc">$</span>Age))</span>
-<span id="cb38-2"><a href="#cb38-2"></a>lrt.age <span class="ot">&lt;-</span> <span class="fu">LRtest</span>(fit, <span class="at">splitcr =</span> splitvec, <span class="at">se =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in LRtest.Rm(fit, splitcr = splitvec, se = TRUE): 
-The following items were excluded due to inappropriate response patterns within
-subgroups:
-SCQoLQ8
-
-Full and subgroup models are estimated without these items!</code></pre>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-37_0b4abf7e85e2784a55cf401712f5f8cf">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># goodness-of-fit plot for items 1, 14, 24, and 25</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="co"># additional 95 percent confidence ellipses, default style</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="fu">plotGOF</span>(lrt.age, <span class="at">beta.subset =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>), <span class="at">conf =</span> <span class="fu">list</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="recall-the-icccs" class="slide level2">
+<h2>Recall the IcCCs</h2>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-31_2b686b587bdce8d4119699bc780f72be">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">plotICC</span>(fit, <span class="at">item.subset =</span> <span class="dv">5</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">mplot=</span><span class="cn">FALSE</span>, <span class="at">legpos =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-37-1.png" width="960" class="r-stretch"></section>
-<section class="slide level2">
-
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-38_a553c4b973e8c2ec726e1df350203355">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># goodness-of-fit plot</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="co"># additional 95 percent control line with user specified style</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a><span class="fu">plotGOF</span>(lrt.age, <span class="at">ctrline =</span> <span class="fu">list</span>(<span class="at">gamma =</span> <span class="fl">0.95</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="st">"dashed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-38-1.png" width="960" class="r-stretch"></section>
-<section id="conclusion-on-andersens-lr-test" class="slide level2">
-<h2>Conclusion on Andersen’s LR test</h2>
-<p>It is not implemented in an optimal way.</p>
-</section>
-<section id="recall-the-item-category-characteristic-curves" class="slide level2">
-<h2>Recall the item <span style="color: OrangeRed;">category</span> characteristic curves</h2>
-<p>A function that shows the relationship between ability (<span class="math inline">\(\theta\)</span>) and the probability of answering an item correctly.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-39_5e621a8b2543ae05b1651fc08773f1ef">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">plotICC</span>(fit, <span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">mplot=</span><span class="cn">FALSE</span>, <span class="at">legpos =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-item-category-characteristic-curves" class="slide level2">
-<h2>The item <span style="color: OrangeRed;">category</span> characteristic curves</h2>
-
 <!-- @Karl: empirical ICC’s showing t↦P(yij=1|Sj=t) in stead of θ↦P(yij=1|θj=θ)?-->
 <!-- The ICC plot highlights how the items are distributed and ordered the item legend based on the difficulty. The difficulty in jointly plotting all the ICCs is that some of the curves can be difficult to see (e.g., item 7). -->
-<img data-src="index_files/figure-revealjs/unnamed-chunk-40-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section>
 <section id="icc-for-polytomous-items" class="slide level2">
 <h2>ICC for polytomous items</h2>
 <p><mark style="background-color: #FFFF00">@ Karl Hvad er pointen?</mark></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-41_11571f526955c786fc0c6c14f2563cb0">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-32_453f0a4b40f47358cd74cc9df97da166">
 
 </div>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-42-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-33-1.png" width="960" class="r-stretch"></section>
 <section id="the-conditional-item-characteristic-curves-ciccs" class="slide level2">
 <h2>The conditional item characteristic curves (CICCs)</h2>
-<p>A Conditional ICC (CICC) is a curve describing the expected item mean as a function of the total score. It is possible to make an empirical CICC based on the observed data as both the empirical expected item score and the total scores can be calculated from the data. This empirical curve can then be compared to the model-based CICC to visualize item fit.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-44_dc99e44cd3dac2d14d7c273cf0898de0">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(RASCHplot)</span>
-<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">CICCplot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!--A Conditional ICC (CICC) is a curve describing the expected item mean as a function of the total score. It is possible to make an empirical CICC based on the observed data as both the empirical expected item score and the total scores can be calculated from the data. This empirical curve can then be compared to the model-based CICC to visualize item fit.-->
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-35_5d5102d81b702021ca4a4a9d0f85cec8">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">library</span>(RASCHplot)</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">CICCplot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-36-1.png" width="960" class="r-stretch"></section>
 <section id="cicc" class="slide level2">
 <h2>CICC</h2>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-45-1.png" width="960" class="r-stretch"></section>
-<section id="cicc-1" class="slide level2">
-<h2>CICC</h2>
-
-<img data-src="index_files/figure-revealjs/unnamed-chunk-46-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-37-1.png" width="960" class="r-stretch"></section>
 <section id="grouping-of-total-scores-for-cicc" class="slide level2">
 <h2>Grouping of total scores (for CICC)</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-47_a76ce4c52b3624003ac84e4c7790330a">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">rowSums</span>(fit<span class="sc">$</span>X))</span>
-<span id="cb44-2"><a href="#cb44-2"></a>tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-38_456357157aa5e9cb323755720b09ba3d">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">rowSums</span>(fit<span class="sc">$</span>X))</span>
+<span id="cb26-2"><a href="#cb26-2"></a>tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  1  2  3  4  5  6  7  8  9 10 11 12 13 14 16 17 18 23 
 25 22 23 17 12  7 13  9  2  2  4  2  2  2  3  1  2  1 </code></pre>
 </div>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-48_9326f7d7dc3470d3c41a7fe351fa50b2">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-39_20512389020ef282a3096492e568f154">
 
 </div>
 <div class="fragment">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-49_50350405c879972e8074be0d11323a39">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>qu <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="fu">rowSums</span>(fit<span class="sc">$</span>X, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">5</span>))</span>
-<span id="cb46-2"><a href="#cb46-2"></a>cuts <span class="ot">&lt;-</span> <span class="fu">cut</span>(<span class="fu">rowSums</span>(fit<span class="sc">$</span>X, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">breaks =</span> qu, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-3"><a href="#cb46-3"></a><span class="fu">table</span>(cuts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-40_89a94f33646a38dfa4d106ac5ec448a1">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>qu <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="fu">rowSums</span>(fit<span class="sc">$</span>X, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">5</span>))</span>
+<span id="cb28-2"><a href="#cb28-2"></a>cuts <span class="ot">&lt;-</span> <span class="fu">cut</span>(<span class="fu">rowSums</span>(fit<span class="sc">$</span>X, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">breaks =</span> qu, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="fu">table</span>(cuts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>cuts
  [1,2]  (2,4]  (4,7] (7,23] 
@@ -1406,33 +1017,46 @@ Full and subgroup models are estimated without these items!</code></pre>
 </div>
 </div>
 <div class="fragment">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-50_d9acdf0c00abcebb835389f10edbff8a">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>lower.cuts <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(<span class="fu">levels</span>(cuts), <span class="st">","</span>), <span class="st">"[["</span>, <span class="dv">1</span>)</span>
-<span id="cb48-2"><a href="#cb48-2"></a>lower.groups <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">D"</span>, <span class="st">""</span>, lower.cuts)) </span>
-<span id="cb48-3"><a href="#cb48-3"></a>lower.groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-41_a1e55279c00b7eef0d5cbcd8672df97b">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>lower.cuts <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(<span class="fu">levels</span>(cuts), <span class="st">","</span>), <span class="st">"[["</span>, <span class="dv">1</span>)</span>
+<span id="cb30-2"><a href="#cb30-2"></a>lower.groups <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">D"</span>, <span class="st">""</span>, lower.cuts)) </span>
+<span id="cb30-3"><a href="#cb30-3"></a>lower.groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 4 7</code></pre>
 </div>
 </div>
 </div>
 <div class="fragment">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-51_f06b562a6c29f6501cdb615761380928">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">CICCplot</span>(fit, <span class="at">lower.groups =</span> lower.groups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-42_fba255c277185a4d2940a5014dd70280">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">CICCplot</span>(fit, <span class="at">which.item =</span> <span class="dv">5</span>, <span class="at">lower.groups =</span> lower.groups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="cicc-with-grouping" class="slide level2">
 <h2>CICC with grouping</h2>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-52-1.png" width="960" class="r-stretch"></section>
-<section id="cicc-with-grouping-1" class="slide level2">
-<h2>CICC with grouping</h2>
+<!--## CICC with grouping
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-53-.gif" width="960" class="r-stretch"></section>
-<section id="cicc-with-grouping-2" class="slide level2">
-<h2>CICC with grouping</h2>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-54-1.png" width="960" class="r-stretch"></section>
+::: {.cell animation.hook='gifski' hash='index_cache/revealjs/unnamed-chunk-44_3e995d199d104f7622d004ba77f5499d'}
+::: {.cell-output-display}
+![](index_files/figure-revealjs/unnamed-chunk-44-.gif){width=960}
+:::
+:::
+
+
+## CICC with grouping
+
+
+::: {.cell hash='index_cache/revealjs/unnamed-chunk-45_19f3458dab5889d4c8adf7d9a8e67213'}
+::: {.cell-output-display}
+![](index_files/figure-revealjs/unnamed-chunk-45-1.png){width=960}
+:::
+:::
+
+
+-->
+<img data-src="index_files/figure-revealjs/unnamed-chunk-43-1.png" width="960" class="r-stretch"></section>
 <section id="infit-and-outfit" class="slide level2">
 <h2>INFIT and OUTFIT</h2>
 <p>Information-weighted mean square (INFIT) and unweighted mean square (OUTFIT) estimates are provided for each item and each person, which is customary in evaluating Rasch model-data fit. These estimates along with their <span class="math inline">\(\chi^2\)</span> values, degrees of freedom, p-value, and t-test statistics are available with the <code>itemfit</code> and <code>personfit</code> commands, respectively, for items and persons. The INFIT t test statistics can also be plotted for items or persons using the <code>plotPImap</code> command, in which users may plot with or without confidence intervals. This plot may be particularly helpful in examining many items or persons efficiently.</p>
@@ -1440,14 +1064,14 @@ Full and subgroup models are estimated without these items!</code></pre>
 <section id="item-fit-statistics" class="slide level2">
 <h2>Item fit statistics</h2>
 <p>The item fit information is obtained through a two-step process. First, we compute the person parameters along will all the residuals. Then, the investigation of the item fit statistics is a straightforward extension. The item fit statistics (i.e., INFIT/OUTFIT <span class="math inline">\(t\)</span> or MSQ) are obtained using</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-55_9d34f0fdfd8148241f246f8c6f12a071">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">person.parameter</span>(fit)</span>
-<span id="cb51-2"><a href="#cb51-2"></a><span class="fu">itemfit</span>(pp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-46_e6649adf602d4bbbeb50fda32b2b2a13">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">person.parameter</span>(fit)</span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">itemfit</span>(pp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="item-fit-statistics-1" class="slide level2">
 <h2>Item fit statistics</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-56_548f8959dccdca659c1ed7963c3bd8d2">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-47_43f26cd090a3daa52d4c0e4ce61dddf7">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Itemfit Statistics: 
@@ -1467,17 +1091,17 @@ SCQoLQ9 132.523 148   0.814      0.889     0.900   -0.969  -0.888   0.581</code>
 <section id="item-fit-statistics-2" class="slide level2">
 <h2>Item fit statistics</h2>
 <p>We cannot trust the P-values, because <code>Chisq</code> does not have a <span class="math inline">\(\chi^2\)</span>-distribution. Nobody knows the asymptotic distribution of INFIT and OUTFIT. We need the R package <code>iarm</code> (item analysis in Rasch models):</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-57_6dfd2c6c0734c3f45170a8454801ff2f">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">library</span>(iarm)</span>
-<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">out_infit</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-48_d34559c54b5c6947714986c62ff34d19">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">library</span>(iarm)</span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="fu">out_infit</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>this output shows <code>*</code> whenever a p-value is smaller then 5%.</p>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-58_1174d6eb6a7eb766af691eacfcdcc2ae">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">library</span>(iarm)</span>
-<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">out_infit</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-49_da851b0c6f1113e30c974c08e97999b6">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">library</span>(iarm)</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="fu">out_infit</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
         Outfit se    pvalue padj sig  Infit se    pvalue padj  sig 
@@ -1495,121 +1119,35 @@ P value adjustment: BH</code></pre>
 </div>
 </div>
 </section>
-<section id="evaluating-item-fit-using-simulation" class="slide level2">
-<h2>Evaluating item fit using simulation</h2>
-<p>Simulate 1000 data sets based on <span class="math inline">\(\hat\beta\)</span> and <span class="math inline">\(\hat\theta\)</span> Look at empirical distribution of <span class="math inline">\(\chi^2\)</span> for item of interest</p>
-<p>Load R package:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-59_3ac88610c79f0de3a33192aa28dc01f0">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">library</span>(RASCHplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Create data matrix:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-60_8d9a2ee538fe701600a7a61941760364">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-61_4060ba93fbd76b57b0a56dcd19f85340">
-
-</div>
-</section>
-<section id="evaluating-item-fit-using-simulation-1" class="slide level2">
-<h2>Evaluating item fit using simulation</h2>
-<p>Simulate item responses and fit statistics:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-62_e6c45b1866325f9846e062e665581401">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>beta <span class="ot">&lt;-</span> <span class="sc">-</span>fit<span class="sc">$</span>betapar</span>
-<span id="cb58-2"><a href="#cb58-2"></a>theta <span class="ot">&lt;-</span> pp<span class="sc">$</span>theta.table<span class="sc">$</span><span class="st">`</span><span class="at">Person Parameter</span><span class="st">`</span></span>
-<span id="cb58-3"><a href="#cb58-3"></a>outfits <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">out_infit</span>(fit)<span class="sc">$</span>Outfit,</span>
-<span id="cb58-4"><a href="#cb58-4"></a>                      <span class="at">y =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">9</span>))</span>
-<span id="cb58-5"><a href="#cb58-5"></a></span>
-<span id="cb58-6"><a href="#cb58-6"></a>x <span class="ot">&lt;-</span> <span class="fu">simRASCHstats</span>(beta, theta,</span>
-<span id="cb58-7"><a href="#cb58-7"></a>                   <span class="at">method.item =</span> <span class="st">"CML"</span>,</span>
-<span id="cb58-8"><a href="#cb58-8"></a>                   <span class="at">method.person =</span> <span class="st">"MLE"</span>,</span>
-<span id="cb58-9"><a href="#cb58-9"></a>                   <span class="at">B =</span> <span class="dv">100</span>, <span class="at">model =</span> <span class="st">"RMD"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="evaluating-item-fit-using-simulation-2" class="slide level2">
-<h2>Evaluating item fit using simulation</h2>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">code</a></li><li><a href="#tabset-1-2">output (min)</a></li><li><a href="#tabset-1-3">output (max)</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-63_33609c56d470701ce3c18facef317951">
-
-</div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-64_aeb573bd61dbf693f79c98602fb7ed10">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">plot</span>(x) <span class="sc">+</span></span>
-<span id="cb59-2"><a href="#cb59-2"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> outfits, </span>
-<span id="cb59-3"><a href="#cb59-3"></a>             <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
-<span id="cb59-4"><a href="#cb59-4"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> outfits, <span class="fu">aes</span>(<span class="at">label =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(outfits)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">2</span>) </span>
-<span id="cb59-5"><a href="#cb59-5"></a></span>
-<span id="cb59-6"><a href="#cb59-6"></a><span class="fu">plot</span>(x, <span class="at">type =</span> <span class="st">"Outfit"</span>, <span class="at">extreme =</span> <span class="st">"max"</span>) <span class="sc">+</span></span>
-<span id="cb59-7"><a href="#cb59-7"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> outfits, </span>
-<span id="cb59-8"><a href="#cb59-8"></a>             <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
-<span id="cb59-9"><a href="#cb59-9"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> outfits, <span class="fu">aes</span>(<span class="at">label =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(outfits)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div id="tabset-1-2">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-65_1e4ac7596555bb8d7bf58f9b933108bb">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-65-1.png" width="960"></p>
-</div>
-</div>
-</div>
-<div id="tabset-1-3">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-66_1c80e77770e832ee93b868c5b927e9c4">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-66-1.png" width="960"></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
 <section id="item-restscore" class="slide level2">
 <h2>Item-restscore</h2>
 <p>Item-total correlations and item-restscore correlations are routinely reported in classical test theory. Kreiner (2011) used the simple structure in the Rasch model to compute the expected values of the item-restscore correlation:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-67_9b281f630542c484fbe4ccd2964b6e50">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">item_restscore</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-68_2e2654dd499d5dd70ea5b879ee4a4636">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">item_restscore</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        observed expected se     pvalue padj.BH sig
-SCQoLQ1 0.5279   0.5731   0.0799 0.5719 0.7256     
-SCQoLQ2 0.6139   0.5726   0.0583 0.4786 0.7256     
-SCQoLQ3 0.7805   0.6241   0.0559 0.0052 0.0234  *  
-SCQoLQ4 0.5551   0.5789   0.0737 0.7467 0.7467     
-SCQoLQ5 0.5899   0.6903   0.0908 0.2689 0.7256     
-SCQoLQ6 0.6710   0.6189   0.1132 0.6450 0.7256     
-SCQoLQ7 0.4559   0.5033   0.0818 0.5619 0.7256     
-SCQoLQ8 0.8106   0.6110   0.0625 0.0014 0.0127  *  
-SCQoLQ9 0.4938   0.5398   0.0628 0.4641 0.7256     </code></pre>
-</div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-50_bb7fc2eaeeb0d2750e3d9d279ec10834">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">item_restscore</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="differential-item-functioning" class="slide level2">
 <h2>Differential item functioning</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-69_1a101d4deacf47830bac618cbee5adf4">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>strat.vars <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Sex =</span> SCQOL<span class="sc">$</span>Sex)</span>
-<span id="cb63-2"><a href="#cb63-2"></a><span class="fu">DIFplot</span>(fit, <span class="at">which.item =</span> <span class="dv">5</span>, <span class="at">strat.vars =</span> strat.vars, <span class="at">lower.groups =</span> lower.groups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-51_f694366b2f7c5c1b791a387570751af7">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>strat.vars <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Sex =</span> SCQOL<span class="sc">$</span>Sex)</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">DIFplot</span>(fit, <span class="at">which.item =</span> <span class="dv">5</span>, <span class="at">strat.vars =</span> strat.vars, <span class="at">lower.groups =</span> lower.groups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-70_a0d811d3612c1d8e10cf195da0f2e1ec">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-52_311c746e5a213f18d615a74bf52dc7de">
 <div class="cell-output cell-output-stdout">
 <pre><code>$SCQoLQ5
 $SCQoLQ5$Sex</code></pre>
 </div>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-70-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-52-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-71_912bb6e994758fa3993b1073afe76f64">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="co">#DIFplot(fit, which.item = 5, strat.vars = strat.vars, lower.groups = lower.groups)[[1]] + </span></span>
-<span id="cb65-2"><a href="#cb65-2"></a><span class="co">#  geom_line(data = data.frame(spline(d, n=n*10)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-53_c9fe023ad80ea68f05b686f10390cc3e">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co">#DIFplot(fit, which.item = 5, strat.vars = strat.vars, lower.groups = lower.groups)[[1]] + </span></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="co">#  geom_line(data = data.frame(spline(d, n=n*10)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -1642,6 +1180,9 @@ $SCQoLQ5$Sex</code></pre>
 <p>Exercise 3/3</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Reporting</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>References</p>
 </div></li>
 </ul>
@@ -1649,10 +1190,9 @@ $SCQoLQ5$Sex</code></pre>
 </section>
 <section id="exercise-23-1" class="slide level2">
 <h2>Exercise 2/3</h2>
-<p>2.1) Anders’s LR test</p>
-<p>2.2) CICC</p>
-<p>2.3) Item fit statistics</p>
-<p>2.4) DIF</p>
+<p>2.1) CICC</p>
+<p>2.2) Item fit statistics (<code>iarm</code>)</p>
+<p>2.3) DIF</p>
 </section></section>
 <section>
 <section class="title-slide slide level1 agenda-slide center">
@@ -1684,6 +1224,9 @@ $SCQoLQ5$Sex</code></pre>
 <p>Exercise 3/3</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Reporting</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>References</p>
 </div></li>
 </ul>
@@ -1693,23 +1236,23 @@ $SCQoLQ5$Sex</code></pre>
 <h2>3. Testing local dependence</h2>
 <p>Testing local dependence can be done by removing an item, fitting the Rasch model to the remaining items, splitting with respect to the removed item. The general method for testing local dependence in IRT is Yens Q3</p>
 <p>We use the <code>sirt</code> (supplementary IRT) package for this:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-72_b1c5430ef9ac3dd45bbf57faf2a28859">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">library</span>(sirt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-54_a69bfaef09aa87895dd70919830d6ab5">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">library</span>(sirt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <p>We fit a Rasch model using <code>sirt</code> and save estimates <span class="math inline">\(\hat\beta\)</span> of item parameters and estimate person locations <span class="math inline">\(\hat\theta\)</span> (we use Warms weighted MLE)</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-73_5dc9f012585ec00f7eb85ee74e683039">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-55_e089db202a8aac110f7dbbeb7baf15a1">
 
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-74_5c53bd2e4d98ecd13812c1eafb8f49dc">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>beta <span class="ot">&lt;-</span> <span class="sc">-</span>fit<span class="sc">$</span>etapar</span>
-<span id="cb67-2"><a href="#cb67-2"></a>theta <span class="ot">&lt;-</span> pp<span class="sc">$</span>thetapar<span class="sc">$</span>NAgroup1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-56_f1af4bfcf85741d48b2b32154bfae54e">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>beta <span class="ot">&lt;-</span> <span class="sc">-</span>fit<span class="sc">$</span>etapar</span>
+<span id="cb43-2"><a href="#cb43-2"></a>theta <span class="ot">&lt;-</span> pp<span class="sc">$</span>thetapar<span class="sc">$</span>NAgroup1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and now we can calculate Yen’s Q3 statistic</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-75_8709be5919319a2188ce8aab5cdd46e8">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>q3 <span class="ot">&lt;-</span> sirt<span class="sc">::</span><span class="fu">Q3</span>(<span class="at">dat =</span> items, <span class="at">theta =</span> theta , <span class="at">b =</span> beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-57_74eceae0c51ac70eb5569641a855267b">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>q3 <span class="ot">&lt;-</span> sirt<span class="sc">::</span><span class="fu">Q3</span>(<span class="at">dat =</span> items, <span class="at">theta =</span> theta , <span class="at">b =</span> beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Yen's Q3 Statistic based on an estimated theta score 
 *** 9 Items | 36 item pairs
@@ -1722,11 +1265,11 @@ $SCQoLQ5$Sex</code></pre>
 <section class="slide level2">
 
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-76-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-58-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-77_e1c969ed721c2a84c185633e0088f0eb">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>q3 <span class="ot">&lt;-</span> sirt<span class="sc">::</span><span class="fu">Q3</span>(<span class="at">dat =</span> items, <span class="at">theta =</span> theta , <span class="at">b =</span> beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-59_0b330b5e847d890a222bea47d72d2cb4">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>q3 <span class="ot">&lt;-</span> sirt<span class="sc">::</span><span class="fu">Q3</span>(<span class="at">dat =</span> items, <span class="at">theta =</span> theta , <span class="at">b =</span> beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Yen's Q3 Statistic based on an estimated theta score 
 *** 9 Items | 36 item pairs
@@ -1767,6 +1310,9 @@ $SCQoLQ5$Sex</code></pre>
 <p>Exercise 3/3</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Reporting</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>References</p>
 </div></li>
 </ul>
@@ -1778,6 +1324,50 @@ $SCQoLQ5$Sex</code></pre>
 <p>3.2)</p>
 <p>3.3)</p>
 <p>3.4)</p>
+</section></section>
+<section>
+<section class="title-slide slide level1 agenda-slide center">
+<h1>Reporting</h1>
+<div class="agenda">
+<ul>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introduction</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>1. Estimate the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 1/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>FIKA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>2. Test the Rasch model</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 2/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>3. Testing local dependence</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Reporting</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>References</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section id="reporting-1" class="slide level2">
+<h2>Reporting</h2>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-60_fa0654de119c7a34b648b1c255ef6656">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">library</span>(RISEkbmRasch) <span class="co"># devtools::install_github("pgmj/RISEkbmRasch", dependencies = TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section></section>
 <section>
 <section class="title-slide slide level1 agenda-slide center">
@@ -1807,6 +1397,9 @@ $SCQoLQ5$Sex</code></pre>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
 <p>Exercise 3/3</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Reporting</p>
 </div></li>
 <li><div class="agenda-active">
 <p>References</p>
